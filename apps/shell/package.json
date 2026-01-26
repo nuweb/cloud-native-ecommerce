@@ -1,0 +1,55 @@
+{
+  "name": "shell",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "projectType": "application",
+    "sourceRoot": "apps/shell/src",
+    "tags": ["scope:shop"],
+    "targets": {
+      "build": {
+        "executor": "@nx/webpack:webpack",
+        "options": {
+          "target": "web",
+          "outputPath": "dist/apps/shell",
+          "webpackConfig": "apps/shell/webpack.config.ts",
+          "index": "apps/shell/index.html",
+          "main": "apps/shell/src/main.tsx",
+          "tsConfig": "apps/shell/tsconfig.app.json",
+          "assets": ["apps/shell/src/favicon.ico", "apps/shell/src/assets"],
+          "styles": ["apps/shell/src/styles.css"]
+        },
+        "configurations": {
+          "production": {
+            "outputFilename": "[name].[contenthash].js"
+          }
+        },
+        "outputs": ["{options.outputPath}"]
+      },
+      "serve": {
+        "executor": "@nx/react:module-federation-dev-server",
+        "options": {
+          "buildTarget": "shell:build",
+          "port": 4200,
+          "host": "localhost",
+          "devRemotes": ["products", "product-detail"]
+        },
+        "configurations": {
+          "production": {
+            "buildTarget": "shell:build:production"
+          }
+        },
+        "dependsOn": ["@org/api:serve"]
+      }
+    }
+  },
+  "dependencies": {
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-router-dom": "6.30.3"
+  },
+  "devDependencies": {
+    "@org/shop-shared-ui": "workspace:*",
+    "typed-assert": "^1.0.9"
+  }
+}

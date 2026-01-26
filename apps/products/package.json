@@ -1,0 +1,64 @@
+{
+  "name": "products",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "projectType": "application",
+    "sourceRoot": "apps/products/src",
+    "tags": ["scope:shop", "type:feature"],
+    "targets": {
+      "build": {
+        "executor": "@nx/webpack:webpack",
+        "options": {
+          "target": "web",
+          "outputPath": "dist/apps/products",
+          "webpackConfig": "apps/products/webpack.config.ts",
+          "index": "apps/products/index.html",
+          "main": "apps/products/src/main.tsx",
+          "tsConfig": "apps/products/tsconfig.app.json",
+          "assets": ["apps/products/src/favicon.ico", "apps/products/src/assets"],
+          "styles": ["apps/products/src/styles.css"]
+        },
+        "configurations": {
+          "production": {
+            "outputFilename": "[name].[contenthash].js"
+          }
+        },
+        "outputs": ["{options.outputPath}"]
+      },
+      "serve": {
+        "executor": "@nx/react:module-federation-dev-server",
+        "options": {
+          "buildTarget": "products:build",
+          "port": 4201,
+          "host": "localhost"
+        },
+        "configurations": {
+          "production": {
+            "buildTarget": "products:build:production"
+          }
+        }
+      },
+      "serve-static": {
+        "executor": "@nx/web:file-server",
+        "options": {
+          "buildTarget": "products:build",
+          "port": 4201,
+          "spa": true
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-router-dom": "6.30.3"
+  },
+  "devDependencies": {
+    "@org/models": "workspace:*",
+    "@org/shop-data": "workspace:*",
+    "@org/shop-feature-products": "workspace:*",
+    "@org/shop-shared-ui": "workspace:*",
+    "typed-assert": "^1.0.9"
+  }
+}
