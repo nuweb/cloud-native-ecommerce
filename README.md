@@ -524,7 +524,17 @@ git push origin main
 
 ~$15-50/month depending on traffic (mostly from CloudFront and App Runner).
 
-See [infra/README.md](./infra/README.md) for detailed deployment instructions.
+See [docs/DEPLOYMENT_GUIDE.md](./docs/DEPLOYMENT_GUIDE.md) for detailed deployment instructions.
+
+---
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [docs/TECH_STACK.md](./docs/TECH_STACK.md) | Complete technology stack reference |
+| [docs/DEPLOYMENT_GUIDE.md](./docs/DEPLOYMENT_GUIDE.md) | Step-by-step deployment guide |
+| [docs/AWS_DEPLOYMENT.md](./docs/AWS_DEPLOYMENT.md) | AWS infrastructure details |
 
 ---
 
