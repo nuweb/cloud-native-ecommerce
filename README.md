@@ -403,6 +403,7 @@ npx nx lint shell --fix
 | `npx nx graph` | Visualize dependency graph |
 | `npx nx affected -t <target>` | Run target on affected projects |
 | `npx nx run-many -t <target>` | Run target on all projects |
+| `npx nx run-many -t typecheck --skip-nx-cache` | TypeScript type checking |
 | `npx nx reset` | Clear Nx cache |
 
 ---

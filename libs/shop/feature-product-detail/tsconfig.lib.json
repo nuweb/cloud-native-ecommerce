@@ -2,7 +2,7 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "composite": false,
+    "composite": true,
     "types": [
       "node",
       "@nx/react/typings/cssmodule.d.ts",
@@ -40,5 +40,8 @@
     "eslint.config.mjs"
   ],
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
-  "references": []
+  "references": [
+    { "path": "../data/tsconfig.lib.json" },
+    { "path": "../shared-ui/tsconfig.lib.json" }
+  ]
 }
