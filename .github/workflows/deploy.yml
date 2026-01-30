@@ -183,7 +183,7 @@ jobs:
 
       - name: Deploy Products to S3
         run: |
-          aws s3 sync dist/products s3://cloud-native-ecommerce-products-production \
+          aws s3 sync dist/products s3://cloud-native-ecommerce-products-production/remotes/products \
             --delete \
             --cache-control "public, max-age=31536000, immutable" \
             --exclude "index.html" \
@@ -191,7 +191,7 @@ jobs:
 
       - name: Deploy Product-Detail to S3
         run: |
-          aws s3 sync dist/product-detail s3://cloud-native-ecommerce-product-detail-production \
+          aws s3 sync dist/product-detail s3://cloud-native-ecommerce-product-detail-production/remotes/product-detail \
             --delete \
             --cache-control "public, max-age=31536000, immutable" \
             --exclude "index.html" \
