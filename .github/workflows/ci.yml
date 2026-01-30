@@ -25,13 +25,30 @@ jobs:
       # Uncomment this line to enable task distribution, and replace "e2e" with "e2e-ci" in the command below
       # - run: npx nx start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
 
-      # Cache node_modules
+      # Setup Node.js
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
-      - run: npm ci
+      # Setup pnpm
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      # Get pnpm store directory for caching
+      - name: Get pnpm store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Cache pnpm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - run: pnpm install
       - run: npx playwright install --only-shell
 
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
