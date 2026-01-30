@@ -65,19 +65,19 @@ jobs:
         run: pnpm install
 
       - name: Build Shell (Host)
-        run: npx nx build shell --configuration=production
+        run: npx nx build shell --configuration=production --skip-nx-cache
         env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+          NX_CLOUD_AUTH_TOKEN: ""
 
       - name: Build Products Remote
-        run: npx nx build products --configuration=production
+        run: npx nx build products --configuration=production --skip-nx-cache
         env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+          NX_CLOUD_AUTH_TOKEN: ""
 
       - name: Build Product-Detail Remote
-        run: npx nx build product-detail --configuration=production
+        run: npx nx build product-detail --configuration=production --skip-nx-cache
         env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+          NX_CLOUD_AUTH_TOKEN: ""
 
       - name: Upload Shell artifacts
         uses: actions/upload-artifact@v4

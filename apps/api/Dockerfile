@@ -24,11 +24,11 @@ RUN pnpm install
 # Copy source code
 COPY . .
 
-# Build the API
-RUN npx nx build api --configuration=production
+# Build the API (outputs to apps/api/dist/)
+RUN npx nx build api --configuration=production --skip-nx-cache
 
 # Debug: List the dist directory structure
-RUN ls -la dist/ && ls -la dist/apps/ && ls -la dist/apps/api/ || true
+RUN ls -la apps/api/dist/ || echo "Build output not found"
 
 # Stage 2: Production
 FROM node:20-alpine AS runner
@@ -39,8 +39,8 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 api
 
-# Copy built application - the API outputs to dist/apps/api
-COPY --from=builder /app/dist/apps/api ./
+# Copy built application - API outputs to apps/api/dist/
+COPY --from=builder /app/apps/api/dist/main.js ./main.js
 COPY --from=builder /app/node_modules ./node_modules
 
 # Set ownership
