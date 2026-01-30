@@ -8,8 +8,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": false,
-    "composite": false,
-    "emitDeclarationOnly": false,
+    "composite": true,
     "declaration": true,
     "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo"
   },
@@ -25,11 +24,7 @@
     "eslint.config.mjs"
   ],
   "references": [
-    {
-      "path": "../../libs/shared/models"
-    },
-    {
-      "path": "../../libs/api/products"
-    }
+    { "path": "../../libs/shared/models/tsconfig.lib.json" },
+    { "path": "../../libs/api/products/tsconfig.lib.json" }
   ]
 }
