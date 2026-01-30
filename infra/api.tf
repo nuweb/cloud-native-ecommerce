@@ -70,10 +70,11 @@ resource "aws_apprunner_service" "api" {
 
   health_check_configuration {
     protocol            = "HTTP"
-    path                = "/api/products"
+    path                = "/health"
     healthy_threshold   = 1
     unhealthy_threshold = 5
     interval            = 10
+    timeout             = 5
   }
 }
 

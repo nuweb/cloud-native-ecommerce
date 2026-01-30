@@ -27,6 +27,11 @@ app.get('/', (req, res) => {
   res.send({ message: 'Hello API' });
 });
 
+// Health check endpoint for App Runner
+app.get('/health', (req, res) => {
+  res.status(200).send({ status: 'healthy' });
+});
+
 // Products endpoints
 app.get('/api/products', (req, res) => {
   try {

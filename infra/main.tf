@@ -90,9 +90,9 @@ provider "aws" {
 # =============================================================================
 
 # Look up the existing Route53 hosted zone
+# Use the hosted zone created by Route 53 domain registration
 data "aws_route53_zone" "main" {
-  name         = var.root_domain
-  private_zone = false
+  zone_id = "Z05706281FAK5KTGTYUDT"  # New zone created by domain registration
 }
 
 # =============================================================================

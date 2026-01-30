@@ -33,10 +33,7 @@
           "buildDepsName": "build-deps",
           "watchDepsName": "watch-deps"
         }
-      },
-      "exclude": [
-        "libs/shared/models/*"
-      ]
+      }
     },
     {
       "plugin": "@nx/react/router-plugin",
@@ -73,17 +70,6 @@
       "options": {
         "targetName": "e2e",
         "ciTargetName": "e2e-ci"
-      }
-    },
-    {
-      "plugin": "@nx/js/typescript",
-      "include": [
-        "libs/shared/models/*"
-      ],
-      "options": {
-        "typecheck": {
-          "targetName": "typecheck"
-        }
       }
     },
     {
