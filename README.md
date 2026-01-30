@@ -533,6 +533,7 @@ See [docs/DEPLOYMENT_GUIDE.md](./docs/DEPLOYMENT_GUIDE.md) for detailed deployme
 | Document | Description |
 |----------|-------------|
 | [docs/TECH_STACK.md](./docs/TECH_STACK.md) | Complete technology stack reference |
+| [docs/NX_STRUCTURE.md](./docs/NX_STRUCTURE.md) | Nx monorepo structure guide |
 | [docs/DEPLOYMENT_GUIDE.md](./docs/DEPLOYMENT_GUIDE.md) | Step-by-step deployment guide |
 | [docs/AWS_DEPLOYMENT.md](./docs/AWS_DEPLOYMENT.md) | AWS infrastructure details |
 
