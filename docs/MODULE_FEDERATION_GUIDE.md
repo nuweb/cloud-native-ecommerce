@@ -5,6 +5,7 @@ This document covers best practices for working with Module Federation in a micr
 ## Table of Contents
 
 - [Overview](#overview)
+- [When to Use Module Federation](#when-to-use-module-federation)
 - [Architecture](#architecture)
 - [How Module Federation Works](#how-module-federation-works)
 - [Independent Team Deployment](#independent-team-deployment)
@@ -41,6 +42,98 @@ This document covers best practices for working with Module Federation in a micr
 │   └─────────────────────┘    └─────────────────────────────────┘│
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## When to Use Module Federation
+
+### The Real Value
+
+Module Federation's value is **not** about what the user sees, but about **how teams work**:
+
+| Benefit | Explanation |
+|---------|-------------|
+| **Independent Deployments** | Team A deploys products, Team B deploys checkout - no coordination |
+| **Independent Releases** | Ship bug fixes without rebuilding/redeploying the entire app |
+| **Team Autonomy** | Teams own their code end-to-end (build, test, deploy) |
+| **Incremental Migration** | Migrate legacy apps piece by piece, not all at once |
+| **Reduced Build Times** | Only rebuild what changed, not the entire monolith |
+| **Fault Isolation** | One team's broken deploy doesn't break others |
+
+### Good Fit vs Bad Fit
+
+| Good Fit | Bad Fit |
+|----------|---------|
+| Large teams (10+ developers) | Small team (1-3 developers) |
+| Multiple release cadences | Same release schedule for all |
+| Enterprise scale applications | Simple applications |
+| Legacy migration scenarios | Greenfield projects |
+| Different teams, different timezones | Co-located single team |
+| Need for technology diversity | Unified tech stack is fine |
+
+### Real-World Scenarios
+
+**When MFE Makes Sense:**
+```
+E-commerce Platform:
+├── Team Catalog (ships 3x/week)     → products remote
+├── Team Checkout (ships 1x/week)    → checkout remote  
+├── Team Account (ships 2x/month)    → account remote
+└── Platform Team (maintains shell)  → shell host
+
+Each team deploys independently. Checkout bug fix doesn't 
+require Catalog team to do anything.
+```
+
+**When MFE is Overkill:**
+```
+Small App:
+├── 2 developers
+├── Same release schedule
+├── Simple features
+└── No legacy to migrate
+
+→ Just use a regular React app. MFE adds complexity without benefit.
+```
+
+### About This Demo Project
+
+This project uses Module Federation to **demonstrate the pattern** for learning purposes. In reality, for a demo with:
+- 1 developer
+- Simple product listing
+- No independent team deployments
+
+A regular React app (like the `apps/shop` Vite app) would be simpler. However, understanding MFE prepares you for enterprise scenarios where it truly shines.
+
+### Loading Behavior
+
+You may notice both remotes load when visiting the site. Here's why:
+
+```tsx
+// Shell loads remotes via lazy()
+const ProductList = lazy(() => import('products/Module'));
+const ProductDetail = lazy(() => import('product-detail/Module'));
+```
+
+**What happens:**
+1. User visits `/products` → Shell loads → Products remote loads
+2. Browser may **prefetch** other `remoteEntry.js` files
+3. User clicks product → Product-detail remote loads (if not prefetched)
+
+The `remoteEntry.js` files are small manifest files (~few KB). The actual component code loads only when needed.
+
+### Cost-Benefit Analysis
+
+| Factor | Monolith | Module Federation |
+|--------|----------|-------------------|
+| **Initial Setup** | Simple | Complex |
+| **Build Time** | Grows with app | Stays small per remote |
+| **Deploy Complexity** | One deploy | Multiple deploys |
+| **Team Coordination** | High | Low |
+| **Debugging** | Easier | Harder (network boundaries) |
+| **Performance** | Single bundle | Multiple network requests |
+
+**Rule of thumb:** Start with a monolith. Adopt MFE when team/organizational pain points emerge, not as a default architecture.
 
 ---
 
