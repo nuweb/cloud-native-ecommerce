@@ -9,8 +9,8 @@ const getApiUrl = (): string => {
   if (typeof window !== 'undefined') {
     const hostname = window.location.hostname;
     if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
-      // Production - use the API subdomain
-      return 'https://api.veeracs.info/api';
+      // Production - use App Runner URL directly (has valid SSL)
+      return 'https://vpw7ds8tch.us-east-1.awsapprunner.com/api';
     }
   }
 
