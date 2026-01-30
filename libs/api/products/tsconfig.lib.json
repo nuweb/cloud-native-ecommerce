@@ -3,8 +3,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
-    "composite": false,
-    "emitDeclarationOnly": false,
+    "composite": true,
     "declaration": true,
     "module": "commonjs",
     "moduleResolution": "node",
@@ -13,6 +12,8 @@
     "types": ["node"]
   },
   "include": ["src/**/*.ts"],
-  "references": [],
+  "references": [
+    { "path": "../../shared/models/tsconfig.lib.json" }
+  ],
   "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }

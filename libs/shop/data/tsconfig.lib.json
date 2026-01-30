@@ -2,10 +2,9 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "composite": false,
-    "declaration": false,
+    "composite": true,
+    "declaration": true,
     "declarationMap": false,
-    "emitDeclarationOnly": false,
     "lib": ["dom", "dom.iterable", "es2022"],
     "types": [
       "node",
@@ -43,5 +42,7 @@
     "eslint.config.mjs"
   ],
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
-  "references": []
+  "references": [
+    { "path": "../../shared/models/tsconfig.lib.json" }
+  ]
 }

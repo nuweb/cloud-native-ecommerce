@@ -2,10 +2,9 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "composite": false,
-    "declaration": false,
+    "composite": true,
+    "declaration": true,
     "declarationMap": false,
-    "emitDeclarationOnly": false,
     "types": [
       "node",
       "@nx/react/typings/cssmodule.d.ts",
@@ -27,5 +26,7 @@
     "**/*.test.jsx"
   ],
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
-  "references": []
+  "references": [
+    { "path": "../models/tsconfig.lib.json" }
+  ]
 }
