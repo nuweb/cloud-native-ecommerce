@@ -21,7 +21,11 @@
         },
         "configurations": {
           "production": {
-            "outputFilename": "[name].[contenthash].js"
+            "webpackConfig": "apps/shell/webpack.config.prod.ts",
+            "outputFilename": "[name].[contenthash].js",
+            "optimization": true,
+            "extractLicenses": true,
+            "sourceMap": false
           }
         },
         "outputs": ["{options.outputPath}"]

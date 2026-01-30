@@ -491,6 +491,42 @@ Violations are caught by ESLint during linting.
 
 ---
 
+## AWS Deployment
+
+This application can be deployed to AWS using the infrastructure in the `infra/` folder.
+
+### Quick Deploy
+
+```bash
+# 1. Configure AWS CLI
+aws configure
+
+# 2. Deploy infrastructure
+cd infra
+terraform init
+terraform apply
+
+# 3. Push to main branch to trigger CI/CD
+git push origin main
+```
+
+### Infrastructure Components
+
+| Service | Purpose | URL |
+|---------|---------|-----|
+| **CloudFront + S3** | Frontend hosting | https://ecommerce.veeracs.info |
+| **App Runner** | API backend | https://api.veeracs.info |
+| **Route 53** | DNS management | - |
+| **ACM** | SSL certificates | - |
+
+### Estimated Cost
+
+~$15-50/month depending on traffic (mostly from CloudFront and App Runner).
+
+See [infra/README.md](./infra/README.md) for detailed deployment instructions.
+
+---
+
 ## Learn More
 
 - [Nx Documentation](https://nx.dev)

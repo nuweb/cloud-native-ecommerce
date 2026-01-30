@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Product, ApiResponse, PaginatedResponse, ProductFilter } from '@org/models';
+import { config } from '../config';
 
-const API_URL = 'http://localhost:3333/api';
+const API_URL = config.apiUrl;
 
 export function useProducts(
   filter?: ProductFilter,
