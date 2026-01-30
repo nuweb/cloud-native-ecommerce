@@ -21,7 +21,6 @@
         },
         "configurations": {
           "production": {
-            "webpackConfig": "apps/shell/webpack.config.prod.ts",
             "outputFilename": "[name].[contenthash].js",
             "optimization": true,
             "extractLicenses": true,

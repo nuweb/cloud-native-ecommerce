@@ -67,16 +67,19 @@ jobs:
       - name: Build Shell (Host)
         run: npx nx build shell --configuration=production --skip-nx-cache
         env:
+          NODE_ENV: production
           NX_CLOUD_AUTH_TOKEN: ""
 
       - name: Build Products Remote
         run: npx nx build products --configuration=production --skip-nx-cache
         env:
+          NODE_ENV: production
           NX_CLOUD_AUTH_TOKEN: ""
 
       - name: Build Product-Detail Remote
         run: npx nx build product-detail --configuration=production --skip-nx-cache
         env:
+          NODE_ENV: production
           NX_CLOUD_AUTH_TOKEN: ""
 
       - name: Upload Shell artifacts
