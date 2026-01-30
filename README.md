@@ -530,11 +530,25 @@ See [docs/DEPLOYMENT_GUIDE.md](./docs/DEPLOYMENT_GUIDE.md) for detailed deployme
 
 ## Documentation
 
+### Architecture & Setup
 | Document | Description |
 |----------|-------------|
 | [docs/TECH_STACK.md](./docs/TECH_STACK.md) | Complete technology stack reference |
 | [docs/NX_STRUCTURE.md](./docs/NX_STRUCTURE.md) | Nx monorepo structure guide |
 | [docs/MODULE_FEDERATION_GUIDE.md](./docs/MODULE_FEDERATION_GUIDE.md) | Module Federation best practices |
+
+### Development
+| Document | Description |
+|----------|-------------|
+| [docs/REACT_PATTERNS.md](./docs/REACT_PATTERNS.md) | React component patterns & guidelines |
+| [docs/TESTING_GUIDE.md](./docs/TESTING_GUIDE.md) | Testing practices with Vitest |
+| [docs/STYLING_GUIDE.md](./docs/STYLING_GUIDE.md) | CSS Modules conventions |
+| [docs/API_REFERENCE.md](./docs/API_REFERENCE.md) | REST API documentation |
+| [docs/CONTRIBUTING.md](./docs/CONTRIBUTING.md) | Contribution guidelines |
+
+### Deployment
+| Document | Description |
+|----------|-------------|
 | [docs/DEPLOYMENT_GUIDE.md](./docs/DEPLOYMENT_GUIDE.md) | Step-by-step deployment guide |
 | [docs/AWS_DEPLOYMENT.md](./docs/AWS_DEPLOYMENT.md) | AWS infrastructure details |
 
