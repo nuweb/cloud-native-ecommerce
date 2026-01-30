@@ -9,8 +9,8 @@ const PROD_DOMAIN = process.env['PROD_DOMAIN'] || 'https://ecommerce.veeracs.inf
 // Configure remotes based on environment
 // Use tuple format: [remoteName, remoteUrl]
 const prodRemotes: Remotes = [
-  ['products', `products@${PROD_DOMAIN}/remotes/products/remoteEntry.js`],
-  ['product-detail', `product-detail@${PROD_DOMAIN}/remotes/product-detail/remoteEntry.js`],
+  ['products', `${PROD_DOMAIN}/remotes/products/remoteEntry.js`],
+  ['product-detail', `${PROD_DOMAIN}/remotes/product-detail/remoteEntry.js`],
 ];
 
 const devRemotes: Remotes = [
