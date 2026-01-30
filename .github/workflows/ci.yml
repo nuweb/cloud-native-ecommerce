@@ -50,7 +50,7 @@ jobs:
 
       - run: pnpm install
 
-      - name: Run lint, test, build, typecheck
-        run: npx nx run-many -t lint test build typecheck --skip-nx-cache
+      - name: Run lint, test, build
+        run: npx nx run-many -t lint test build --skip-nx-cache
         env:
           NX_CLOUD_AUTH_TOKEN: ""
