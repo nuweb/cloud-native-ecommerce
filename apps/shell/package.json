@@ -23,7 +23,7 @@
           "production": {
             "outputFilename": "[name].[contenthash].js",
             "optimization": true,
-            "extractLicenses": true,
+          "extractLicenses": false,
             "sourceMap": false
           }
         },

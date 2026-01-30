@@ -104,30 +104,12 @@ resource "aws_iam_role_policy_attachment" "apprunner_ecr_access" {
 }
 
 # =============================================================================
-# Custom Domain for API (Optional)
+# Custom Domain for API
+# Note: Custom domain setup for App Runner requires manual DNS validation
+# after the service is created. The service URL will be used initially.
 # =============================================================================
 
-resource "aws_apprunner_custom_domain_association" "api" {
-  domain_name          = "api.${var.root_domain}"
-  service_arn          = aws_apprunner_service.api.arn
-  enable_www_subdomain = false
-}
-
-# Route53 records for API custom domain validation
-resource "aws_route53_record" "api_validation" {
-  for_each = {
-    for record in aws_apprunner_custom_domain_association.api.certificate_validation_records :
-    record.name => record
-  }
-
-  zone_id = data.aws_route53_zone.main.zone_id
-  name    = each.value.name
-  type    = each.value.type
-  ttl     = 300
-  records = [each.value.value]
-}
-
-# Route53 A record for API
+# Route53 CNAME record pointing to App Runner service
 resource "aws_route53_record" "api" {
   zone_id = data.aws_route53_zone.main.zone_id
   name    = "api.${var.root_domain}"
