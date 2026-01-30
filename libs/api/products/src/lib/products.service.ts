@@ -130,7 +130,7 @@ export class ProductsService {
       description: 'Adjustable LED desk lamp with touch controls and multiple brightness levels.',
       price: 39.99,
       category: 'Home & Kitchen',
-      imageUrl: 'https://images.unsplash.com/photo-1565306257569-4eb0e3c41b24?w=500',
+      imageUrl: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500',
       inStock: true,
       rating: 4.4,
       reviewCount: 276,
