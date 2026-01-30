@@ -2,7 +2,7 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "composite": true,
+    "composite": false,
     "declaration": true,
     "declarationMap": false,
     "types": [
@@ -26,7 +26,5 @@
     "**/*.test.jsx"
   ],
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
-  "references": [
-    { "path": "../models/tsconfig.lib.json" }
-  ]
+  "references": []
 }

@@ -2,7 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "composite": true
+    "composite": false
   },
   "files": [
     "../../node_modules/@nx/react/typings/cssmodule.d.ts",
@@ -20,10 +20,5 @@
     "src/**/*.ts",
     "src/**/*.tsx"
   ],
-  "references": [
-    { "path": "../../libs/shared/models/tsconfig.lib.json" },
-    { "path": "../../libs/shop/data/tsconfig.lib.json" },
-    { "path": "../../libs/shop/shared-ui/tsconfig.lib.json" },
-    { "path": "../../libs/shop/feature-products/tsconfig.lib.json" }
-  ]
+  "references": []
 }
