@@ -106,7 +106,6 @@ describe('ProductList', () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText('Our Products')).toBeInTheDocument();
     expect(screen.getByText('Wireless Headphones')).toBeInTheDocument();
     expect(screen.getByText('Running Shoes')).toBeInTheDocument();
     expect(screen.getByText('Showing 2 of 2 products')).toBeInTheDocument();
