@@ -14,7 +14,6 @@ export function App() {
       <header className="app-header">
         <div className="header-content">
           <img src={logo} alt="NuCart Logo" className="app-logo" />
-          <h1 className="app-title">NuCart</h1>
         </div>
       </header>
 
