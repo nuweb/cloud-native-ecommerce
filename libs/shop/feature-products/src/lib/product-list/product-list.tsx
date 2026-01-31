@@ -80,11 +80,6 @@ export function ProductList() {
 
   return (
     <div className={styles['product-list-container']}>
-      <header className={styles['page-header']}>
-        <h1>Our Products</h1>
-        <p>Explore our wide selection of high-quality products</p>
-      </header>
-
       <div className={styles['filters-section']}>
         <div className={styles['search-box']}>
           <input

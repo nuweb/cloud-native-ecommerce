@@ -21,7 +21,7 @@ body {
 }
 
 .app-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-bottom: 1px solid #e0e0e0;
   color: white;
   padding: 24px 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -39,9 +39,7 @@ body {
 .app-logo {
   height: 48px;
   width: auto;
-  background: white;
   padding: 4px 8px;
-  border-radius: 4px;
 }
 
 .app-title {

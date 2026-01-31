@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { LoadingSpinner } from '@org/shop-shared-ui';
-import logo from '../assets/logo.svg';
+import logo from '../assets/nucart-logo.svg';
 import './app.css';
 
 // Federated remotes - loaded at runtime from remote apps
