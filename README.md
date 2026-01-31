@@ -553,6 +553,11 @@ See [docs/DEPLOYMENT_GUIDE.md](./docs/DEPLOYMENT_GUIDE.md) for detailed deployme
 | [docs/DEPLOYMENT_GUIDE.md](./docs/DEPLOYMENT_GUIDE.md) | Step-by-step deployment guide |
 | [docs/AWS_DEPLOYMENT.md](./docs/AWS_DEPLOYMENT.md) | AWS infrastructure details |
 
+### Roadmap
+| Document | Description |
+|----------|-------------|
+| [docs/FUTURE_ENHANCEMENTS.md](./docs/FUTURE_ENHANCEMENTS.md) | Future features roadmap (database, auth, payments, etc.) |
+
 ---
 
 ## Learn More
