@@ -31,6 +31,14 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.app-logo {
+  height: 48px;
+  width: auto;
 }
 
 .app-title {
@@ -55,6 +63,10 @@ button {
 }
 
 @media (max-width: 768px) {
+  .app-logo {
+    height: 36px;
+  }
+
   .app-title {
     font-size: 1.5rem;
   }

@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { LoadingSpinner } from '@org/shop-shared-ui';
+import logo from '../assets/logo.svg';
 import './app.css';
 
 // Federated remotes - loaded at runtime from remote apps
@@ -12,7 +13,8 @@ export function App() {
     <div className="app">
       <header className="app-header">
         <div className="header-content">
-          <h1 className="app-title">Nx Shop Demo</h1>
+          <img src={logo} alt="NuCart Logo" className="app-logo" />
+          <h1 className="app-title">NuCart</h1>
         </div>
       </header>
 
