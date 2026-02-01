@@ -25,4 +25,10 @@ export const createMockProductList = (count = 3): Product[] => {
   );
 };
 
-export const mockCategories = ['Electronics', 'Clothing', 'Home & Kitchen', 'Sports', 'Accessories'];
+export const mockCategories = [
+  'Electronics',
+  'Clothing',
+  'Home & Kitchen',
+  'Sports',
+  'Accessories',
+];

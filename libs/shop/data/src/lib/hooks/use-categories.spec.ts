@@ -121,7 +121,13 @@ describe('useCategories', () => {
   });
 
   it('should maintain categories order from API', async () => {
-    const orderedCategories = ['Accessories', 'Clothing', 'Electronics', 'Home & Kitchen', 'Sports'];
+    const orderedCategories = [
+      'Accessories',
+      'Clothing',
+      'Electronics',
+      'Home & Kitchen',
+      'Sports',
+    ];
     (fetch as any).mockResolvedValueOnce({
       ok: true,
       json: async () => ({ success: true, data: orderedCategories }),

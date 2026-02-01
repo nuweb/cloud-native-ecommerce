@@ -5,7 +5,10 @@
   "nx": {
     "projectType": "application",
     "sourceRoot": "apps/product-detail/src",
-    "tags": ["scope:shop", "type:feature"],
+    "tags": [
+      "scope:shop",
+      "type:feature"
+    ],
     "targets": {
       "build": {
         "executor": "@nx/webpack:webpack",
@@ -16,15 +19,22 @@
           "index": "apps/product-detail/index.html",
           "main": "apps/product-detail/src/main.tsx",
           "tsConfig": "apps/product-detail/tsconfig.app.json",
-          "assets": ["apps/product-detail/src/favicon.ico", "apps/product-detail/src/assets"],
-          "styles": ["apps/product-detail/src/styles.css"]
+          "assets": [
+            "apps/product-detail/src/favicon.ico",
+            "apps/product-detail/src/assets"
+          ],
+          "styles": [
+            "apps/product-detail/src/styles.css"
+          ]
         },
         "configurations": {
           "production": {
             "outputFilename": "[name].[contenthash].js"
           }
         },
-        "outputs": ["{options.outputPath}"]
+        "outputs": [
+          "{options.outputPath}"
+        ]
       },
       "serve": {
         "executor": "@nx/react:module-federation-dev-server",

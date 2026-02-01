@@ -35,13 +35,7 @@ export interface ProductCardProps {
 }
 
 // 2. Component definition
-export function ProductCard({
-  id,
-  name,
-  price,
-  imageUrl,
-  onSelect,
-}: ProductCardProps) {
+export function ProductCard({ id, name, price, imageUrl, onSelect }: ProductCardProps) {
   // 3. Hooks first
   const handleClick = () => onSelect?.(id);
 
@@ -50,7 +44,7 @@ export function ProductCard({
 
   // 5. Render
   return (
-    <article 
+    <article
       className={styles.card}
       onClick={handleClick}
       role="button"
@@ -128,15 +122,15 @@ export { ProductGrid } from './lib/product-grid/product-grid';
 
 ### Naming Conventions
 
-| Type | Convention | Example |
-|------|------------|---------|
-| Component file | `kebab-case.tsx` | `product-card.tsx` |
-| Component name | `PascalCase` | `ProductCard` |
-| Hook file | `use-kebab-case.ts` | `use-products.ts` |
-| Hook name | `useCamelCase` | `useProducts` |
-| Style file | `*.module.css` | `product-card.module.css` |
-| Test file | `*.spec.tsx` | `product-card.spec.tsx` |
-| Type/Interface | `PascalCase` | `ProductCardProps` |
+| Type           | Convention          | Example                   |
+| -------------- | ------------------- | ------------------------- |
+| Component file | `kebab-case.tsx`    | `product-card.tsx`        |
+| Component name | `PascalCase`        | `ProductCard`             |
+| Hook file      | `use-kebab-case.ts` | `use-products.ts`         |
+| Hook name      | `useCamelCase`      | `useProducts`             |
+| Style file     | `*.module.css`      | `product-card.module.css` |
+| Test file      | `*.spec.tsx`        | `product-card.spec.tsx`   |
+| Type/Interface | `PascalCase`        | `ProductCardProps`        |
 
 ---
 
@@ -160,6 +154,7 @@ export function ProductCard({ name, price, imageUrl }: ProductCardProps) {
 ```
 
 **Characteristics:**
+
 - No data fetching
 - No side effects
 - Easily testable
@@ -182,6 +177,7 @@ export function ProductList() {
 ```
 
 **Characteristics:**
+
 - Fetches data
 - Manages local state
 - Composes presentational components
@@ -245,7 +241,7 @@ interface UseProductsResult {
 
 export function useProducts(options: UseProductsOptions = {}): UseProductsResult {
   const { filter, page = 1, pageSize = 12 } = options;
-  
+
   const [products, setProducts] = useState<Product[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -254,7 +250,7 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsResult
   const fetchData = async () => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const response = await fetchProducts({ ...filter, page, pageSize });
       setProducts(response.items);
@@ -284,9 +280,9 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsResult
 ```typescript
 useEffect(() => {
   const controller = new AbortController();
-  
+
   fetchData(controller.signal);
-  
+
   return () => controller.abort(); // Cleanup
 }, [dependency]);
 ```
@@ -297,14 +293,16 @@ useEffect(() => {
 // Toggle state
 function useToggle(initial = false) {
   const [value, setValue] = useState(initial);
-  const toggle = useCallback(() => setValue(v => !v), []);
+  const toggle = useCallback(() => setValue((v) => !v), []);
   return [value, toggle] as const;
 }
 
 // Previous value
 function usePrevious<T>(value: T): T | undefined {
   const ref = useRef<T>();
-  useEffect(() => { ref.current = value; }, [value]);
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
   return ref.current;
 }
 
@@ -337,8 +335,8 @@ const [user, setUser] = useState<User | null>(null);
 // Don't store what you can compute
 function ProductList({ products }: { products: Product[] }) {
   // ✅ Derived - computed on render
-  const inStockCount = products.filter(p => p.inStock).length;
-  
+  const inStockCount = products.filter((p) => p.inStock).length;
+
   // ❌ Don't duplicate in state
   // const [inStockCount, setInStockCount] = useState(0);
 }
@@ -350,13 +348,10 @@ function ProductList({ products }: { products: Product[] }) {
 // Parent owns state, children receive via props
 function ProductPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
-  
+
   return (
     <>
-      <CategoryFilter 
-        selected={selectedCategory} 
-        onSelect={setSelectedCategory} 
-      />
+      <CategoryFilter selected={selectedCategory} onSelect={setSelectedCategory} />
       <ProductList category={selectedCategory} />
     </>
   );
@@ -378,20 +373,20 @@ const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
-  
+
   const addItem = useCallback((product: Product) => {
-    setItems(prev => [...prev, { ...product, quantity: 1 }]);
+    setItems((prev) => [...prev, { ...product, quantity: 1 }]);
   }, []);
-  
+
   const removeItem = useCallback((id: string) => {
-    setItems(prev => prev.filter(item => item.id !== id));
+    setItems((prev) => prev.filter((item) => item.id !== id));
   }, []);
-  
+
   const total = useMemo(
     () => items.reduce((sum, item) => sum + item.price * item.quantity, 0),
     [items]
   );
-  
+
   return (
     <CartContext.Provider value={{ items, addItem, removeItem, total }}>
       {children}
@@ -415,10 +410,10 @@ export function useCart() {
 ```typescript
 // Required vs optional
 interface ButtonProps {
-  label: string;           // Required
-  onClick?: () => void;    // Optional
-  disabled?: boolean;      // Optional with default
-  variant?: 'primary' | 'secondary';  // Union type
+  label: string; // Required
+  onClick?: () => void; // Optional
+  disabled?: boolean; // Optional with default
+  variant?: 'primary' | 'secondary'; // Union type
 }
 
 // With children
@@ -445,11 +440,7 @@ interface ListProps<T> {
 
 ```tsx
 // Using default parameters (preferred)
-function Button({ 
-  variant = 'primary', 
-  disabled = false,
-  ...props 
-}: ButtonProps) {
+function Button({ variant = 'primary', disabled = false, ...props }: ButtonProps) {
   return <button className={styles[variant]} disabled={disabled} {...props} />;
 }
 ```
@@ -458,7 +449,7 @@ function Button({
 
 ```typescript
 // Different props based on variant
-type AlertProps = 
+type AlertProps =
   | { variant: 'success'; message: string }
   | { variant: 'error'; message: string; onRetry: () => void }
   | { variant: 'loading' };
@@ -493,7 +484,7 @@ import styles from './product-card.module.css';
 // Use in component
 <div className={styles.card}>
   <h3 className={styles.title}>{name}</h3>
-</div>
+</div>;
 ```
 
 ```css
@@ -562,25 +553,25 @@ const ProductCard = memo(function ProductCard({ product }: Props) {
 });
 
 // useMemo for expensive computations
-const sortedProducts = useMemo(
-  () => products.sort((a, b) => a.price - b.price),
-  [products]
-);
+const sortedProducts = useMemo(() => products.sort((a, b) => a.price - b.price), [products]);
 
 // useCallback for stable function references
-const handleClick = useCallback((id: string) => {
-  onSelect(id);
-}, [onSelect]);
+const handleClick = useCallback(
+  (id: string) => {
+    onSelect(id);
+  },
+  [onSelect]
+);
 ```
 
 ### When to Memoize
 
-| Scenario | Solution |
-|----------|----------|
-| Component re-renders with same props | `memo()` |
-| Expensive calculation | `useMemo()` |
-| Function passed to memoized child | `useCallback()` |
-| Large lists | Virtualization (react-window) |
+| Scenario                             | Solution                      |
+| ------------------------------------ | ----------------------------- |
+| Component re-renders with same props | `memo()`                      |
+| Expensive calculation                | `useMemo()`                   |
+| Function passed to memoized child    | `useCallback()`               |
+| Large lists                          | Virtualization (react-window) |
 
 ### Code Splitting
 
@@ -591,7 +582,7 @@ const ProductDetail = lazy(() => import('./ProductDetail'));
 // With Suspense
 <Suspense fallback={<LoadingSpinner />}>
   <ProductDetail />
-</Suspense>
+</Suspense>;
 ```
 
 ---
@@ -620,7 +611,7 @@ const ProductDetail = lazy(() => import('./ProductDetail'));
 
 ```tsx
 // Interactive elements
-<button 
+<button
   aria-label="Close dialog"
   aria-pressed={isPressed}
 >
@@ -652,12 +643,7 @@ function ProductCard({ onSelect }: Props) {
   };
 
   return (
-    <article
-      tabIndex={0}
-      role="button"
-      onClick={onSelect}
-      onKeyDown={handleKeyDown}
-    >
+    <article tabIndex={0} role="button" onClick={onSelect} onKeyDown={handleKeyDown}>
       {/* ... */}
     </article>
   );
@@ -669,13 +655,13 @@ function ProductCard({ onSelect }: Props) {
 ```tsx
 function Dialog({ isOpen, onClose }: Props) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  
+
   useEffect(() => {
     if (isOpen) {
       closeButtonRef.current?.focus();
     }
   }, [isOpen]);
-  
+
   return isOpen ? (
     <div role="dialog" aria-modal="true">
       <button ref={closeButtonRef} onClick={onClose}>
@@ -690,14 +676,14 @@ function Dialog({ isOpen, onClose }: Props) {
 
 ## Anti-Patterns to Avoid
 
-| Anti-Pattern | Problem | Solution |
-|--------------|---------|----------|
-| Props drilling | Passing props through many levels | Context or composition |
-| Giant components | Hard to test and maintain | Split into smaller components |
-| useEffect for derived state | Unnecessary re-renders | Compute during render |
-| Index as key | Causes bugs with reordering | Use unique IDs |
-| Inline objects/functions | Creates new reference each render | useMemo/useCallback |
-| Mutating state directly | React won't detect changes | Always create new objects |
+| Anti-Pattern                | Problem                           | Solution                      |
+| --------------------------- | --------------------------------- | ----------------------------- |
+| Props drilling              | Passing props through many levels | Context or composition        |
+| Giant components            | Hard to test and maintain         | Split into smaller components |
+| useEffect for derived state | Unnecessary re-renders            | Compute during render         |
+| Index as key                | Causes bugs with reordering       | Use unique IDs                |
+| Inline objects/functions    | Creates new reference each render | useMemo/useCallback           |
+| Mutating state directly     | React won't detect changes        | Always create new objects     |
 
 ---
 

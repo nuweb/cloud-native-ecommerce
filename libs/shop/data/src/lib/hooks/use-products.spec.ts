@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { useProducts } from './use-products';
-import {ProductFilter} from "@org/models";
+import { ProductFilter } from '@org/models';
 
 // Mock fetch
 global.fetch = vi.fn();
@@ -69,9 +69,7 @@ describe('useProducts', () => {
     expect(result.current.totalPages).toBe(1);
     expect(result.current.error).toBeNull();
 
-    expect(fetch).toHaveBeenCalledWith(
-      'http://localhost:3333/api/products?page=1&pageSize=12'
-    );
+    expect(fetch).toHaveBeenCalledWith('http://localhost:3333/api/products?page=1&pageSize=12');
   });
 
   it('should fetch products with filters', async () => {
@@ -124,9 +122,7 @@ describe('useProducts', () => {
       expect(result.current.loading).toBe(false);
     });
 
-    expect(fetch).toHaveBeenCalledWith(
-      'http://localhost:3333/api/products?page=1&pageSize=12'
-    );
+    expect(fetch).toHaveBeenCalledWith('http://localhost:3333/api/products?page=1&pageSize=12');
   });
 
   it('should handle fetch errors', async () => {
@@ -167,12 +163,9 @@ describe('useProducts', () => {
       json: async () => mockProductsResponse,
     });
 
-    const { result, rerender } = renderHook(
-      ({ filter }) => useProducts(filter),
-      {
-        initialProps: { filter: undefined } as {filter?: ProductFilter},
-      }
-    );
+    const { result, rerender } = renderHook(({ filter }) => useProducts(filter), {
+      initialProps: { filter: undefined } as { filter?: ProductFilter },
+    });
 
     await waitFor(() => {
       expect(result.current.loading).toBe(false);
@@ -181,7 +174,7 @@ describe('useProducts', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
 
     // Change filter
-    rerender({ filter: { category: 'Electronics' }});
+    rerender({ filter: { category: 'Electronics' } });
 
     await waitFor(() => {
       expect(fetch).toHaveBeenCalledTimes(2);
@@ -220,8 +213,6 @@ describe('useProducts', () => {
       expect(fetch).toHaveBeenCalledTimes(2);
     });
 
-    expect(fetch).toHaveBeenLastCalledWith(
-      'http://localhost:3333/api/products?page=2&pageSize=12'
-    );
+    expect(fetch).toHaveBeenLastCalledWith('http://localhost:3333/api/products?page=2&pageSize=12');
   });
 });

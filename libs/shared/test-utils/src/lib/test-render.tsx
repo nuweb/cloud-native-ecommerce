@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import {render, RenderOptions, RenderResult} from '@testing-library/react';
+import { render, RenderOptions, RenderResult } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 interface AllTheProvidersProps {

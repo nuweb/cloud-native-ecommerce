@@ -51,41 +51,43 @@ This document covers best practices for working with Module Federation in a micr
 
 Module Federation's value is **not** about what the user sees, but about **how teams work**:
 
-| Benefit | Explanation |
-|---------|-------------|
+| Benefit                     | Explanation                                                        |
+| --------------------------- | ------------------------------------------------------------------ |
 | **Independent Deployments** | Team A deploys products, Team B deploys checkout - no coordination |
-| **Independent Releases** | Ship bug fixes without rebuilding/redeploying the entire app |
-| **Team Autonomy** | Teams own their code end-to-end (build, test, deploy) |
-| **Incremental Migration** | Migrate legacy apps piece by piece, not all at once |
-| **Reduced Build Times** | Only rebuild what changed, not the entire monolith |
-| **Fault Isolation** | One team's broken deploy doesn't break others |
+| **Independent Releases**    | Ship bug fixes without rebuilding/redeploying the entire app       |
+| **Team Autonomy**           | Teams own their code end-to-end (build, test, deploy)              |
+| **Incremental Migration**   | Migrate legacy apps piece by piece, not all at once                |
+| **Reduced Build Times**     | Only rebuild what changed, not the entire monolith                 |
+| **Fault Isolation**         | One team's broken deploy doesn't break others                      |
 
 ### Good Fit vs Bad Fit
 
-| Good Fit | Bad Fit |
-|----------|---------|
-| Large teams (10+ developers) | Small team (1-3 developers) |
-| Multiple release cadences | Same release schedule for all |
-| Enterprise scale applications | Simple applications |
-| Legacy migration scenarios | Greenfield projects |
-| Different teams, different timezones | Co-located single team |
-| Need for technology diversity | Unified tech stack is fine |
+| Good Fit                             | Bad Fit                       |
+| ------------------------------------ | ----------------------------- |
+| Large teams (10+ developers)         | Small team (1-3 developers)   |
+| Multiple release cadences            | Same release schedule for all |
+| Enterprise scale applications        | Simple applications           |
+| Legacy migration scenarios           | Greenfield projects           |
+| Different teams, different timezones | Co-located single team        |
+| Need for technology diversity        | Unified tech stack is fine    |
 
 ### Real-World Scenarios
 
 **When MFE Makes Sense:**
+
 ```
 E-commerce Platform:
 ├── Team Catalog (ships 3x/week)     → products remote
-├── Team Checkout (ships 1x/week)    → checkout remote  
+├── Team Checkout (ships 1x/week)    → checkout remote
 ├── Team Account (ships 2x/month)    → account remote
 └── Platform Team (maintains shell)  → shell host
 
-Each team deploys independently. Checkout bug fix doesn't 
+Each team deploys independently. Checkout bug fix doesn't
 require Catalog team to do anything.
 ```
 
 **When MFE is Overkill:**
+
 ```
 Small App:
 ├── 2 developers
@@ -99,6 +101,7 @@ Small App:
 ### About This Demo Project
 
 This project uses Module Federation to **demonstrate the pattern** for learning purposes. In reality, for a demo with:
+
 - 1 developer
 - Simple product listing
 - No independent team deployments
@@ -116,6 +119,7 @@ const ProductDetail = lazy(() => import('product-detail/Module'));
 ```
 
 **What happens:**
+
 1. User visits `/products` → Shell loads → Products remote loads
 2. Browser may **prefetch** other `remoteEntry.js` files
 3. User clicks product → Product-detail remote loads (if not prefetched)
@@ -124,14 +128,14 @@ The `remoteEntry.js` files are small manifest files (~few KB). The actual compon
 
 ### Cost-Benefit Analysis
 
-| Factor | Monolith | Module Federation |
-|--------|----------|-------------------|
-| **Initial Setup** | Simple | Complex |
-| **Build Time** | Grows with app | Stays small per remote |
-| **Deploy Complexity** | One deploy | Multiple deploys |
-| **Team Coordination** | High | Low |
-| **Debugging** | Easier | Harder (network boundaries) |
-| **Performance** | Single bundle | Multiple network requests |
+| Factor                | Monolith       | Module Federation           |
+| --------------------- | -------------- | --------------------------- |
+| **Initial Setup**     | Simple         | Complex                     |
+| **Build Time**        | Grows with app | Stays small per remote      |
+| **Deploy Complexity** | One deploy     | Multiple deploys            |
+| **Team Coordination** | High           | Low                         |
+| **Debugging**         | Easier         | Harder (network boundaries) |
+| **Performance**       | Single bundle  | Multiple network requests   |
 
 **Rule of thumb:** Start with a monolith. Adopt MFE when team/organizational pain points emerge, not as a default architecture.
 
@@ -141,12 +145,12 @@ The `remoteEntry.js` files are small manifest files (~few KB). The actual compon
 
 ### Host vs Remote
 
-| Concept | Description | Example |
-|---------|-------------|---------|
-| **Host (Shell)** | Application that consumes remote modules | `apps/shell` |
-| **Remote** | Application that exposes modules | `apps/products`, `apps/product-detail` |
-| **Exposed Module** | Code that a remote shares | `./Module` → `remote-entry.ts` |
-| **Remote Entry** | Generated file listing exposed modules | `remoteEntry.js` |
+| Concept            | Description                              | Example                                |
+| ------------------ | ---------------------------------------- | -------------------------------------- |
+| **Host (Shell)**   | Application that consumes remote modules | `apps/shell`                           |
+| **Remote**         | Application that exposes modules         | `apps/products`, `apps/product-detail` |
+| **Exposed Module** | Code that a remote shares                | `./Module` → `remote-entry.ts`         |
+| **Remote Entry**   | Generated file listing exposed modules   | `remoteEntry.js`                       |
 
 ### File Structure
 
@@ -181,7 +185,7 @@ apps/
 const config: ModuleFederationConfig = {
   name: 'products',
   exposes: {
-    './Module': './src/remote-entry.ts',  // Key: what shell imports
+    './Module': './src/remote-entry.ts', // Key: what shell imports
   },
 };
 ```
@@ -292,21 +296,21 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          
+
       - run: pnpm install
-      
+
       - name: Build Products
         run: npx nx build products --configuration=production
         env:
           NODE_ENV: production
-          
+
       - name: Configure AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-          
+
       - name: Deploy to S3
         run: |
           aws s3 sync dist/products \
@@ -314,13 +318,13 @@ jobs:
             --delete \
             --cache-control "public, max-age=31536000, immutable" \
             --exclude "*.html" --exclude "*.json"
-          
+
           # HTML and JSON with shorter cache
           aws s3 sync dist/products \
             s3://cloud-native-ecommerce-products-production/remotes/products \
             --exclude "*" --include "*.html" --include "*.json" \
             --cache-control "public, max-age=0, must-revalidate"
-            
+
       - name: Invalidate CloudFront
         run: |
           aws cloudfront create-invalidation \
@@ -385,6 +389,7 @@ const prodRemotes: Remotes = [
 ### Why Share Dependencies?
 
 Without sharing, each remote bundles its own React, causing:
+
 - Larger bundle sizes
 - Multiple React instances (breaks hooks)
 - Inconsistent behavior
@@ -404,11 +409,11 @@ shared: {
 
 ### Rules for Shared Dependencies
 
-| Rule | Reason |
-|------|--------|
-| **Singleton** | Only one instance (React, Router) |
+| Rule                  | Reason                                |
+| --------------------- | ------------------------------------- |
+| **Singleton**         | Only one instance (React, Router)     |
 | **Version alignment** | All apps must use compatible versions |
-| **Eager loading** | Host should load shared deps first |
+| **Eager loading**     | Host should load shared deps first    |
 
 ---
 
@@ -427,6 +432,7 @@ PATCH - Bug fixes
 ### Contract Versioning
 
 The "contract" between host and remote is:
+
 1. **Module name** - `products/Module`
 2. **Export shape** - `export default ProductList`
 3. **Props interface** - What the component accepts
@@ -446,7 +452,7 @@ export default function ProductList({ category }: { category: string }) { ... }
 ```typescript
 // Make props optional to maintain compatibility
 interface ProductListProps {
-  category?: string;  // Optional = backward compatible
+  category?: string; // Optional = backward compatible
 }
 
 export default function ProductList({ category }: ProductListProps) {
@@ -497,23 +503,18 @@ export function App() {
 
 ```typescript
 // Retry loading failed remote
-const loadRemoteWithRetry = async (
-  importFn: () => Promise<any>,
-  retries = 3
-): Promise<any> => {
+const loadRemoteWithRetry = async (importFn: () => Promise<any>, retries = 3): Promise<any> => {
   for (let i = 0; i < retries; i++) {
     try {
       return await importFn();
     } catch (error) {
       if (i === retries - 1) throw error;
-      await new Promise(r => setTimeout(r, 1000 * (i + 1)));
+      await new Promise((r) => setTimeout(r, 1000 * (i + 1)));
     }
   }
 };
 
-const ProductList = lazy(() => 
-  loadRemoteWithRetry(() => import('products/Module'))
-);
+const ProductList = lazy(() => loadRemoteWithRetry(() => import('products/Module')));
 ```
 
 ---
@@ -522,32 +523,32 @@ const ProductList = lazy(() =>
 
 ### Do's
 
-| Practice | Reason |
-|----------|--------|
-| **Keep remotes small** | Faster loads, easier maintenance |
-| **Share only necessary deps** | Avoid bloat |
-| **Use TypeScript** | Catch contract mismatches early |
-| **Version your remotes** | Enable rollbacks |
-| **Test in isolation** | Each remote should work standalone |
-| **Monitor remote load times** | Performance visibility |
-| **Use error boundaries** | Graceful degradation |
+| Practice                      | Reason                             |
+| ----------------------------- | ---------------------------------- |
+| **Keep remotes small**        | Faster loads, easier maintenance   |
+| **Share only necessary deps** | Avoid bloat                        |
+| **Use TypeScript**            | Catch contract mismatches early    |
+| **Version your remotes**      | Enable rollbacks                   |
+| **Test in isolation**         | Each remote should work standalone |
+| **Monitor remote load times** | Performance visibility             |
+| **Use error boundaries**      | Graceful degradation               |
 
 ### Don'ts
 
-| Anti-Pattern | Problem |
-|--------------|---------|
-| **Circular dependencies** | Host imports remote that imports host |
-| **Tight coupling** | Remotes depending on host internals |
-| **Unversioned shared deps** | Version mismatches at runtime |
-| **No fallback UI** | Broken page if remote fails |
-| **Deploying all together** | Defeats the purpose of MFE |
+| Anti-Pattern                | Problem                               |
+| --------------------------- | ------------------------------------- |
+| **Circular dependencies**   | Host imports remote that imports host |
+| **Tight coupling**          | Remotes depending on host internals   |
+| **Unversioned shared deps** | Version mismatches at runtime         |
+| **No fallback UI**          | Broken page if remote fails           |
+| **Deploying all together**  | Defeats the purpose of MFE            |
 
 ### Communication Between Remotes
 
 ```typescript
 // Option 1: URL Parameters
 // Shell passes data via route params
-<Route path="/products/:id" element={<ProductDetail />} />
+<Route path="/products/:id" element={<ProductDetail />} />;
 
 // Option 2: Custom Events
 // Remote emits event
@@ -560,7 +561,7 @@ window.addEventListener('product-selected', (e) => navigate(`/products/${e.detai
 // Shell provides context, remotes consume
 <ShopContext.Provider value={{ cart, addToCart }}>
   <ProductList />
-</ShopContext.Provider>
+</ShopContext.Provider>;
 ```
 
 ---
@@ -574,6 +575,7 @@ window.addEventListener('product-selected', (e) => navigate(`/products/${e.detai
 **Cause:** Remote's `remoteEntry.js` not accessible
 
 **Solutions:**
+
 1. Check remote is deployed to correct URL
 2. Verify CORS headers on S3/CloudFront
 3. Check CloudFront cache invalidation
@@ -584,6 +586,7 @@ window.addEventListener('product-selected', (e) => navigate(`/products/${e.detai
 **Cause:** Version mismatch in shared dependencies
 
 **Solutions:**
+
 1. Align dependency versions across all apps
 2. Check `singleton: true` for React
 3. Run `pnpm install` to sync lockfile
@@ -593,6 +596,7 @@ window.addEventListener('product-selected', (e) => navigate(`/products/${e.detai
 **Cause:** Multiple React instances
 
 **Solutions:**
+
 1. Ensure React is shared with `singleton: true`
 2. Check all apps use same React version
 3. Verify shared config in webpack

@@ -99,33 +99,43 @@ export function ProductCard({ name, price }: Props) {
 
 ### Class Names
 
-| Convention | Example | Use Case |
-|------------|---------|----------|
-| `camelCase` | `.productCard` | Standard class name |
-| `elementName` | `.title`, `.price` | Child elements |
-| `stateName` | `.isActive`, `.isLoading` | State modifiers |
-| `variantName` | `.primary`, `.secondary` | Variants |
+| Convention    | Example                   | Use Case            |
+| ------------- | ------------------------- | ------------------- |
+| `camelCase`   | `.productCard`            | Standard class name |
+| `elementName` | `.title`, `.price`        | Child elements      |
+| `stateName`   | `.isActive`, `.isLoading` | State modifiers     |
+| `variantName` | `.primary`, `.secondary`  | Variants            |
 
 ### Examples
 
 ```css
 /* Component root */
-.card { }
+.card {
+}
 
 /* Child elements */
-.cardImage { }
-.cardTitle { }
-.cardPrice { }
-.cardActions { }
+.cardImage {
+}
+.cardTitle {
+}
+.cardPrice {
+}
+.cardActions {
+}
 
 /* States */
-.isActive { }
-.isDisabled { }
-.isLoading { }
+.isActive {
+}
+.isDisabled {
+}
+.isLoading {
+}
 
 /* Variants */
-.cardFeatured { }
-.cardCompact { }
+.cardFeatured {
+}
+.cardCompact {
+}
 ```
 
 ### File Names
@@ -255,7 +265,7 @@ component-name.module.scss   # If using Sass
 .productGrid {
   display: grid;
   gap: 16px;
-  
+
   /* Mobile: 1 column */
   grid-template-columns: 1fr;
 }
@@ -311,42 +321,42 @@ component-name.module.scss   # If using Sass
   --color-success: #2e7d32;
   --color-error: #d32f2f;
   --color-warning: #ed6c02;
-  
+
   /* Text colors */
   --color-text-primary: #212121;
   --color-text-secondary: #757575;
   --color-text-disabled: #9e9e9e;
-  
+
   /* Background colors */
   --color-bg-primary: #ffffff;
   --color-bg-secondary: #f5f5f5;
   --color-bg-paper: #ffffff;
-  
+
   /* Borders */
   --color-border: #e0e0e0;
   --border-radius-sm: 4px;
   --border-radius-md: 8px;
   --border-radius-lg: 16px;
-  
+
   /* Spacing */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
   --spacing-xl: 32px;
-  
+
   /* Typography */
   --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-size-sm: 0.875rem;
   --font-size-md: 1rem;
   --font-size-lg: 1.25rem;
   --font-size-xl: 1.5rem;
-  
+
   /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  
+
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-normal: 250ms ease;
@@ -595,7 +605,7 @@ component-name.module.scss   # If using Sass
   .button {
     border: 2px solid currentColor;
   }
-  
+
   .card {
     border-width: 2px;
   }
@@ -624,22 +634,22 @@ component-name.module.scss   # If using Sass
 
 ### Do's
 
-| Practice | Reason |
-|----------|--------|
-| Use CSS variables | Consistent theming |
-| Mobile-first breakpoints | Progressive enhancement |
+| Practice                 | Reason                    |
+| ------------------------ | ------------------------- |
+| Use CSS variables        | Consistent theming        |
+| Mobile-first breakpoints | Progressive enhancement   |
 | Use `rem` for font sizes | Respects user preferences |
-| Add focus styles | Keyboard accessibility |
-| Use semantic class names | Maintainable code |
+| Add focus styles         | Keyboard accessibility    |
+| Use semantic class names | Maintainable code         |
 
 ### Don'ts
 
-| Anti-Pattern | Problem |
-|--------------|---------|
-| `!important` | Specificity wars |
-| Deep nesting | Hard to override |
-| Magic numbers | Hard to maintain |
-| ID selectors | Too specific |
+| Anti-Pattern  | Problem                      |
+| ------------- | ---------------------------- |
+| `!important`  | Specificity wars             |
+| Deep nesting  | Hard to override             |
+| Magic numbers | Hard to maintain             |
+| ID selectors  | Too specific                 |
 | Inline styles | Can't reuse, override issues |
 
 ---

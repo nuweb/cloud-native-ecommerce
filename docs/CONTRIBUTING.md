@@ -69,13 +69,13 @@ git checkout -b fix/product-card-overflow
 
 ### Branch Naming
 
-| Type | Pattern | Example |
-|------|---------|---------|
-| Feature | `feature/<description>` | `feature/add-wishlist` |
-| Bug fix | `fix/<description>` | `fix/price-rounding` |
+| Type     | Pattern                  | Example                  |
+| -------- | ------------------------ | ------------------------ |
+| Feature  | `feature/<description>`  | `feature/add-wishlist`   |
+| Bug fix  | `fix/<description>`      | `fix/price-rounding`     |
 | Refactor | `refactor/<description>` | `refactor/product-hooks` |
-| Docs | `docs/<description>` | `docs/api-reference` |
-| Chore | `chore/<description>` | `chore/update-deps` |
+| Docs     | `docs/<description>`     | `docs/api-reference`     |
+| Chore    | `chore/<description>`    | `chore/update-deps`      |
 
 ### 2. Make Changes
 
@@ -126,7 +126,7 @@ interface CartItem {
 type Status = 'loading' | 'success' | 'error';
 
 // ❌ Avoid `any`
-function process(data: any) { } // Bad
+function process(data: any) {} // Bad
 
 // ✅ Use `unknown` and narrow
 function process(data: unknown) {
@@ -208,31 +208,31 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/).
 
 ### Types
 
-| Type | Description |
-|------|-------------|
-| `feat` | New feature |
-| `fix` | Bug fix |
-| `docs` | Documentation changes |
-| `style` | Formatting, missing semicolons, etc. |
+| Type       | Description                                             |
+| ---------- | ------------------------------------------------------- |
+| `feat`     | New feature                                             |
+| `fix`      | Bug fix                                                 |
+| `docs`     | Documentation changes                                   |
+| `style`    | Formatting, missing semicolons, etc.                    |
 | `refactor` | Code change that neither fixes a bug nor adds a feature |
-| `perf` | Performance improvement |
-| `test` | Adding or updating tests |
-| `chore` | Maintenance tasks, dependencies |
-| `ci` | CI/CD changes |
+| `perf`     | Performance improvement                                 |
+| `test`     | Adding or updating tests                                |
+| `chore`    | Maintenance tasks, dependencies                         |
+| `ci`       | CI/CD changes                                           |
 
 ### Scopes
 
-| Scope | Description |
-|-------|-------------|
-| `shell` | Shell application |
-| `products` | Products remote |
+| Scope            | Description           |
+| ---------------- | --------------------- |
+| `shell`          | Shell application     |
+| `products`       | Products remote       |
 | `product-detail` | Product detail remote |
-| `api` | Backend API |
-| `shop-data` | Data library |
-| `shop-ui` | Shared UI library |
-| `models` | Models library |
-| `infra` | Infrastructure |
-| `deps` | Dependencies |
+| `api`            | Backend API           |
+| `shop-data`      | Data library          |
+| `shop-ui`        | Shared UI library     |
+| `models`         | Models library        |
+| `infra`          | Infrastructure        |
+| `deps`           | Dependencies          |
 
 ### Examples
 
@@ -275,20 +275,24 @@ BREAKING CHANGE: Product response now includes nested 'data' property"
 
 ```markdown
 ## Description
+
 Brief description of changes.
 
 ## Type of Change
+
 - [ ] Bug fix
 - [ ] New feature
 - [ ] Breaking change
 - [ ] Documentation update
 
 ## How to Test
+
 1. Step one
 2. Step two
 3. Expected result
 
 ## Checklist
+
 - [ ] Tests added/updated
 - [ ] Documentation updated
 - [ ] No console.log statements
@@ -335,12 +339,12 @@ fix(api): handle null product category
 
 ### Feedback Labels
 
-| Label | Meaning |
-|-------|---------|
-| `nit:` | Minor suggestion, not blocking |
-| `question:` | Seeking clarification |
-| `suggestion:` | Recommended improvement |
-| `issue:` | Must be addressed before merge |
+| Label         | Meaning                        |
+| ------------- | ------------------------------ |
+| `nit:`        | Minor suggestion, not blocking |
+| `question:`   | Seeking clarification          |
+| `suggestion:` | Recommended improvement        |
+| `issue:`      | Must be addressed before merge |
 
 ---
 
@@ -348,21 +352,21 @@ fix(api): handle null product category
 
 ### Coverage Requirements
 
-| Metric | Minimum |
-|--------|---------|
-| Statements | 80% |
-| Branches | 80% |
-| Functions | 80% |
-| Lines | 80% |
+| Metric     | Minimum |
+| ---------- | ------- |
+| Statements | 80%     |
+| Branches   | 80%     |
+| Functions  | 80%     |
+| Lines      | 80%     |
 
 ### What Must Be Tested
 
-| Type | Requirement |
-|------|-------------|
-| Components | Render, interactions, edge cases |
-| Hooks | State changes, effects, error handling |
-| Services | All public methods |
-| Utilities | All exported functions |
+| Type       | Requirement                            |
+| ---------- | -------------------------------------- |
+| Components | Render, interactions, edge cases       |
+| Hooks      | State changes, effects, error handling |
+| Services   | All public methods                     |
+| Utilities  | All exported functions                 |
 
 ### Test Commands
 

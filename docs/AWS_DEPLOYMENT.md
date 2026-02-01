@@ -59,16 +59,16 @@ Complete guide for deploying the Cloud-Native E-Commerce application to AWS.
 
 ### Service Overview
 
-| Service | Domain | Purpose |
-|---------|--------|---------|
-| **CloudFront** | ecommerce.veeracs.info | CDN for frontend apps |
-| **S3 (Shell)** | /\* | Host application (Module Federation host) |
-| **S3 (Products)** | /remotes/products/\* | Products microfrontend |
-| **S3 (Product Detail)** | /remotes/product-detail/\* | Product detail microfrontend |
-| **App Runner** | api.veeracs.info | Express.js API backend |
-| **ECR** | - | Docker image registry |
-| **ACM** | - | SSL/TLS certificates |
-| **Route 53** | - | DNS management |
+| Service                 | Domain                     | Purpose                                   |
+| ----------------------- | -------------------------- | ----------------------------------------- |
+| **CloudFront**          | ecommerce.veeracs.info     | CDN for frontend apps                     |
+| **S3 (Shell)**          | /\*                        | Host application (Module Federation host) |
+| **S3 (Products)**       | /remotes/products/\*       | Products microfrontend                    |
+| **S3 (Product Detail)** | /remotes/product-detail/\* | Product detail microfrontend              |
+| **App Runner**          | api.veeracs.info           | Express.js API backend                    |
+| **ECR**                 | -                          | Docker image registry                     |
+| **ACM**                 | -                          | SSL/TLS certificates                      |
+| **Route 53**            | -                          | DNS management                            |
 
 ---
 
@@ -76,14 +76,15 @@ Complete guide for deploying the Cloud-Native E-Commerce application to AWS.
 
 ### Infrastructure (Terraform)
 
-| File | Description |
-|------|-------------|
-| `infra/main.tf` | Main Terraform configuration |
-| `infra/api.tf` | App Runner and ECR configuration |
-| `infra/.gitignore` | Ignores Terraform state files |
-| `infra/README.md` | Infrastructure documentation |
+| File               | Description                      |
+| ------------------ | -------------------------------- |
+| `infra/main.tf`    | Main Terraform configuration     |
+| `infra/api.tf`     | App Runner and ECR configuration |
+| `infra/.gitignore` | Ignores Terraform state files    |
+| `infra/README.md`  | Infrastructure documentation     |
 
 #### `infra/main.tf` - Contains:
+
 - S3 buckets for Shell, Products, and Product-Detail
 - S3 bucket policies for CloudFront access
 - CloudFront Origin Access Control (OAC)
@@ -92,6 +93,7 @@ Complete guide for deploying the Cloud-Native E-Commerce application to AWS.
 - Route 53 DNS records
 
 #### `infra/api.tf` - Contains:
+
 - ECR repository for API Docker images
 - App Runner service configuration
 - IAM roles for App Runner ECR access
@@ -99,11 +101,12 @@ Complete guide for deploying the Cloud-Native E-Commerce application to AWS.
 
 ### CI/CD Pipeline
 
-| File | Description |
-|------|-------------|
+| File                           | Description                        |
+| ------------------------------ | ---------------------------------- |
 | `.github/workflows/deploy.yml` | GitHub Actions deployment workflow |
 
 #### Workflow Jobs:
+
 1. **build-frontend** - Builds Shell, Products, and Product-Detail apps
 2. **build-api** - Builds and pushes API Docker image to ECR
 3. **deploy-frontend** - Syncs built assets to S3 and invalidates CloudFront
@@ -111,21 +114,21 @@ Complete guide for deploying the Cloud-Native E-Commerce application to AWS.
 
 ### Application Configuration
 
-| File | Description |
-|------|-------------|
-| `apps/api/Dockerfile` | Multi-stage Docker build for API |
+| File                                | Description                                |
+| ----------------------------------- | ------------------------------------------ |
+| `apps/api/Dockerfile`               | Multi-stage Docker build for API           |
 | `apps/shell/webpack.config.prod.ts` | Production webpack config with remote URLs |
-| `libs/shop/data/src/lib/config.ts` | Environment-aware API URL configuration |
+| `libs/shop/data/src/lib/config.ts`  | Environment-aware API URL configuration    |
 
 ### Modified Files
 
-| File | Changes |
-|------|---------|
-| `apps/shell/module-federation.config.ts` | Added production remote URLs |
-| `apps/shell/package.json` | Added production build configuration |
-| `libs/shop/data/src/lib/hooks/use-products.ts` | Uses config for API URL |
-| `libs/shop/data/src/lib/hooks/use-product.ts` | Uses config for API URL |
-| `README.md` | Added AWS deployment section |
+| File                                           | Changes                              |
+| ---------------------------------------------- | ------------------------------------ |
+| `apps/shell/module-federation.config.ts`       | Added production remote URLs         |
+| `apps/shell/package.json`                      | Added production build configuration |
+| `libs/shop/data/src/lib/hooks/use-products.ts` | Uses config for API URL              |
+| `libs/shop/data/src/lib/hooks/use-product.ts`  | Uses config for API URL              |
+| `README.md`                                    | Added AWS deployment section         |
 
 ---
 
@@ -223,6 +226,7 @@ terraform apply
 ```
 
 Type `yes` when prompted. This creates:
+
 - 3 S3 buckets
 - 1 CloudFront distribution
 - 1 ACM certificate
@@ -239,6 +243,7 @@ terraform output
 ```
 
 Save these values:
+
 - `cloudfront_distribution_id`
 - `website_url`
 - `api_service_url`
@@ -247,13 +252,14 @@ Save these values:
 ### Step 5: Configure GitHub Secrets
 
 Go to your GitHub repository:
+
 1. Settings → Secrets and variables → Actions
 2. Add these secrets:
 
-| Secret Name | Value |
-|-------------|-------|
-| `AWS_ACCESS_KEY_ID` | Your AWS access key |
-| `AWS_SECRET_ACCESS_KEY` | Your AWS secret key |
+| Secret Name             | Value                     |
+| ----------------------- | ------------------------- |
+| `AWS_ACCESS_KEY_ID`     | Your AWS access key       |
+| `AWS_SECRET_ACCESS_KEY` | Your AWS secret key       |
 | `NX_CLOUD_ACCESS_TOKEN` | (Optional) Nx Cloud token |
 
 ### Step 6: Deploy via Git Push
@@ -265,6 +271,7 @@ git push origin main
 ```
 
 GitHub Actions will automatically:
+
 1. Build all frontend applications
 2. Build and push API Docker image
 3. Deploy to S3
@@ -284,21 +291,22 @@ GitHub Actions will automatically:
 ```yaml
 on:
   push:
-    branches: [main]      # Auto-deploy on push to main
-  workflow_dispatch:      # Manual trigger
+    branches: [main] # Auto-deploy on push to main
+  workflow_dispatch: # Manual trigger
 ```
 
 ### Environment Variables
 
-| Variable | Value |
-|----------|-------|
-| `AWS_REGION` | us-east-1 |
+| Variable      | Value                  |
+| ------------- | ---------------------- |
+| `AWS_REGION`  | us-east-1              |
 | `DOMAIN_NAME` | ecommerce.veeracs.info |
-| `API_DOMAIN` | api.veeracs.info |
+| `API_DOMAIN`  | api.veeracs.info       |
 
 ### Build Artifacts
 
 The workflow creates these artifacts (retained for 1 day):
+
 - `shell-dist` - Host application
 - `products-dist` - Products remote
 - `product-detail-dist` - Product detail remote
@@ -378,15 +386,15 @@ App Runner automatically deploys when a new image is pushed.
 
 ### Monthly Cost Breakdown
 
-| Service | Configuration | Est. Cost |
-|---------|--------------|-----------|
-| **S3** | 3 buckets, ~100MB storage | $0.50-2 |
-| **CloudFront** | 10GB transfer, 100k requests | $5-15 |
-| **Route 53** | 1 hosted zone, DNS queries | $0.50-1 |
-| **ACM** | SSL certificate | Free |
-| **App Runner** | 0.25 vCPU, 512MB | $5-25 |
-| **ECR** | ~500MB storage | $0.50-1 |
-| **Total** | Low traffic | **$12-45/month** |
+| Service        | Configuration                | Est. Cost        |
+| -------------- | ---------------------------- | ---------------- |
+| **S3**         | 3 buckets, ~100MB storage    | $0.50-2          |
+| **CloudFront** | 10GB transfer, 100k requests | $5-15            |
+| **Route 53**   | 1 hosted zone, DNS queries   | $0.50-1          |
+| **ACM**        | SSL certificate              | Free             |
+| **App Runner** | 0.25 vCPU, 512MB             | $5-25            |
+| **ECR**        | ~500MB storage               | $0.50-1          |
+| **Total**      | Low traffic                  | **$12-45/month** |
 
 ### Cost Optimization Tips
 
@@ -419,6 +427,7 @@ aws acm describe-certificate \
 ### CloudFront 403 Forbidden
 
 **Causes**:
+
 - S3 bucket policy missing
 - Object doesn't exist
 - OAC not configured
@@ -483,10 +492,10 @@ terraform destroy
 
 ### URLs
 
-| Environment | Frontend | API |
-|-------------|----------|-----|
-| **Production** | https://ecommerce.veeracs.info | https://api.veeracs.info |
-| **Development** | http://localhost:4200 | http://localhost:3333 |
+| Environment     | Frontend                       | API                      |
+| --------------- | ------------------------------ | ------------------------ |
+| **Production**  | https://ecommerce.veeracs.info | https://api.veeracs.info |
+| **Development** | http://localhost:4200          | http://localhost:3333    |
 
 ### Useful Commands
 

@@ -31,17 +31,17 @@ This platform demonstrates a **cloud-native microfrontend architecture** for an 
 
 ### Technology Stack
 
-| Layer | Technology |
-|-------|------------|
-| **Frontend Framework** | React 19 |
-| **Build System** | Nx 22.4 |
-| **Module Federation** | Webpack 5 + @nx/module-federation |
-| **Routing** | React Router v6 |
-| **Styling** | CSS Modules |
-| **Backend** | Express.js |
-| **Testing** | Vitest (unit), Playwright (e2e) |
-| **Package Manager** | pnpm |
-| **TypeScript** | TypeScript 5.x |
+| Layer                  | Technology                        |
+| ---------------------- | --------------------------------- |
+| **Frontend Framework** | React 19                          |
+| **Build System**       | Nx 22.4                           |
+| **Module Federation**  | Webpack 5 + @nx/module-federation |
+| **Routing**            | React Router v6                   |
+| **Styling**            | CSS Modules                       |
+| **Backend**            | Express.js                        |
+| **Testing**            | Vitest (unit), Playwright (e2e)   |
+| **Package Manager**    | pnpm                              |
+| **TypeScript**         | TypeScript 5.x                    |
 
 ---
 
@@ -74,25 +74,25 @@ This platform demonstrates a **cloud-native microfrontend architecture** for an 
 
 ### Applications
 
-| App | Description | Port |
-|-----|-------------|------|
-| `shell` | Module Federation host - main entry point | 4200 |
-| `products` | Remote microfrontend - product listing | 4201 |
-| `product-detail` | Remote microfrontend - product details | 4202 |
-| `api` | Express.js backend API | 3333 |
-| `shop` | Standalone Vite app (alternative) | 4200 |
+| App              | Description                               | Port |
+| ---------------- | ----------------------------------------- | ---- |
+| `shell`          | Module Federation host - main entry point | 4200 |
+| `products`       | Remote microfrontend - product listing    | 4201 |
+| `product-detail` | Remote microfrontend - product details    | 4202 |
+| `api`            | Express.js backend API                    | 3333 |
+| `shop`           | Standalone Vite app (alternative)         | 4200 |
 
 ### Libraries
 
-| Library | Scope | Type | Description |
-|---------|-------|------|-------------|
-| `@org/shop-feature-products` | shop | feature | Product listing component |
-| `@org/shop-feature-product-detail` | shop | feature | Product detail component |
-| `@org/shop-data` | shop | data | Data fetching hooks and services |
-| `@org/shop-shared-ui` | shop | ui | Shared UI components (LoadingSpinner, ProductCard, etc.) |
-| `@org/models` | shared | data | TypeScript interfaces and types |
-| `@org/api-products` | api | feature | Products service for API |
-| `@org/test-utils` | shared | util | Testing utilities |
+| Library                            | Scope  | Type    | Description                                              |
+| ---------------------------------- | ------ | ------- | -------------------------------------------------------- |
+| `@org/shop-feature-products`       | shop   | feature | Product listing component                                |
+| `@org/shop-feature-product-detail` | shop   | feature | Product detail component                                 |
+| `@org/shop-data`                   | shop   | data    | Data fetching hooks and services                         |
+| `@org/shop-shared-ui`              | shop   | ui      | Shared UI components (LoadingSpinner, ProductCard, etc.) |
+| `@org/models`                      | shared | data    | TypeScript interfaces and types                          |
+| `@org/api-products`                | api    | feature | Products service for API                                 |
+| `@org/test-utils`                  | shared | util    | Testing utilities                                        |
 
 ---
 
@@ -119,12 +119,12 @@ npx nx serve shell
 
 ### Access the Application
 
-| Service | URL |
-|---------|-----|
-| **Main Application** | http://localhost:4200 |
-| **Products Remote** | http://localhost:4201 |
+| Service                   | URL                   |
+| ------------------------- | --------------------- |
+| **Main Application**      | http://localhost:4200 |
+| **Products Remote**       | http://localhost:4201 |
 | **Product Detail Remote** | http://localhost:4202 |
-| **API Server** | http://localhost:3333 |
+| **API Server**            | http://localhost:3333 |
 
 ---
 
@@ -305,13 +305,13 @@ The workspace uses TypeScript path mappings to import libraries:
 
 ### Key Configuration Details
 
-| Setting | Value | Purpose |
-|---------|-------|---------|
-| `composite: false` | Apps & React libs | Allows consuming libraries from source without pre-building |
-| `lib: ["es2022", "dom"]` | React apps | DOM types for browser APIs |
-| `jsx: "react-jsx"` | React projects | Modern JSX transform |
-| `moduleResolution: "bundler"` | Frontend | Webpack/Vite module resolution |
-| `moduleResolution: "node"` | Backend | Node.js module resolution |
+| Setting                       | Value             | Purpose                                                     |
+| ----------------------------- | ----------------- | ----------------------------------------------------------- |
+| `composite: false`            | Apps & React libs | Allows consuming libraries from source without pre-building |
+| `lib: ["es2022", "dom"]`      | React apps        | DOM types for browser APIs                                  |
+| `jsx: "react-jsx"`            | React projects    | Modern JSX transform                                        |
+| `moduleResolution: "bundler"` | Frontend          | Webpack/Vite module resolution                              |
+| `moduleResolution: "node"`    | Backend           | Node.js module resolution                                   |
 
 ---
 
@@ -391,20 +391,20 @@ npx nx lint shell --fix
 
 ## Available Commands
 
-| Command | Description |
-|---------|-------------|
-| `npx nx serve shell` | Start full application |
-| `npx nx serve shop` | Start standalone Vite app |
-| `npx nx serve api` | Start API server only |
-| `npx nx build <project>` | Build a project |
-| `npx nx test <project>` | Run unit tests |
-| `npx nx lint <project>` | Run linting |
-| `npx nx e2e shop-e2e` | Run E2E tests |
-| `npx nx graph` | Visualize dependency graph |
-| `npx nx affected -t <target>` | Run target on affected projects |
-| `npx nx run-many -t <target>` | Run target on all projects |
-| `npx nx run-many -t typecheck --skip-nx-cache` | TypeScript type checking |
-| `npx nx reset` | Clear Nx cache |
+| Command                                        | Description                     |
+| ---------------------------------------------- | ------------------------------- |
+| `npx nx serve shell`                           | Start full application          |
+| `npx nx serve shop`                            | Start standalone Vite app       |
+| `npx nx serve api`                             | Start API server only           |
+| `npx nx build <project>`                       | Build a project                 |
+| `npx nx test <project>`                        | Run unit tests                  |
+| `npx nx lint <project>`                        | Run linting                     |
+| `npx nx e2e shop-e2e`                          | Run E2E tests                   |
+| `npx nx graph`                                 | Visualize dependency graph      |
+| `npx nx affected -t <target>`                  | Run target on affected projects |
+| `npx nx run-many -t <target>`                  | Run target on all projects      |
+| `npx nx run-many -t typecheck --skip-nx-cache` | TypeScript type checking        |
+| `npx nx reset`                                 | Clear Nx cache                  |
 
 ---
 
@@ -479,14 +479,14 @@ The workspace has `typescript-sync` disabled in `nx.json`:
 
 This repository enforces architectural constraints using Nx tags:
 
-| Tag | Description | Can Import |
-|-----|-------------|------------|
-| `scope:shop` | Shop application code | `scope:shop`, `scope:shared` |
-| `scope:api` | API backend code | `scope:api`, `scope:shared` |
-| `scope:shared` | Shared utilities | Nothing external |
-| `type:feature` | Feature modules | All types |
-| `type:data` | Data access layer | `type:data`, `scope:shared` |
-| `type:ui` | UI components | `type:ui`, `scope:shared` |
+| Tag            | Description           | Can Import                   |
+| -------------- | --------------------- | ---------------------------- |
+| `scope:shop`   | Shop application code | `scope:shop`, `scope:shared` |
+| `scope:api`    | API backend code      | `scope:api`, `scope:shared`  |
+| `scope:shared` | Shared utilities      | Nothing external             |
+| `type:feature` | Feature modules       | All types                    |
+| `type:data`    | Data access layer     | `type:data`, `scope:shared`  |
+| `type:ui`      | UI components         | `type:ui`, `scope:shared`    |
 
 Violations are caught by ESLint during linting.
 
@@ -513,12 +513,12 @@ git push origin main
 
 ### Infrastructure Components
 
-| Service | Purpose | URL |
-|---------|---------|-----|
+| Service             | Purpose          | URL                            |
+| ------------------- | ---------------- | ------------------------------ |
 | **CloudFront + S3** | Frontend hosting | https://ecommerce.veeracs.info |
-| **App Runner** | API backend | https://api.veeracs.info |
-| **Route 53** | DNS management | - |
-| **ACM** | SSL certificates | - |
+| **App Runner**      | API backend      | https://api.veeracs.info       |
+| **Route 53**        | DNS management   | -                              |
+| **ACM**             | SSL certificates | -                              |
 
 ### Estimated Cost
 
@@ -531,31 +531,35 @@ See [docs/DEPLOYMENT_GUIDE.md](./docs/DEPLOYMENT_GUIDE.md) for detailed deployme
 ## Documentation
 
 ### Architecture & Setup
-| Document | Description |
-|----------|-------------|
-| [docs/SYSTEM_DESIGN.md](./docs/SYSTEM_DESIGN.md) | **System Design Document** - comprehensive architecture overview |
-| [docs/TECH_STACK.md](./docs/TECH_STACK.md) | Complete technology stack reference |
-| [docs/NX_STRUCTURE.md](./docs/NX_STRUCTURE.md) | Nx monorepo structure guide |
-| [docs/MODULE_FEDERATION_GUIDE.md](./docs/MODULE_FEDERATION_GUIDE.md) | Module Federation best practices |
+
+| Document                                                             | Description                                                      |
+| -------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [docs/SYSTEM_DESIGN.md](./docs/SYSTEM_DESIGN.md)                     | **System Design Document** - comprehensive architecture overview |
+| [docs/TECH_STACK.md](./docs/TECH_STACK.md)                           | Complete technology stack reference                              |
+| [docs/NX_STRUCTURE.md](./docs/NX_STRUCTURE.md)                       | Nx monorepo structure guide                                      |
+| [docs/MODULE_FEDERATION_GUIDE.md](./docs/MODULE_FEDERATION_GUIDE.md) | Module Federation best practices                                 |
 
 ### Development
-| Document | Description |
-|----------|-------------|
+
+| Document                                           | Description                           |
+| -------------------------------------------------- | ------------------------------------- |
 | [docs/REACT_PATTERNS.md](./docs/REACT_PATTERNS.md) | React component patterns & guidelines |
-| [docs/TESTING_GUIDE.md](./docs/TESTING_GUIDE.md) | Testing practices with Vitest |
-| [docs/STYLING_GUIDE.md](./docs/STYLING_GUIDE.md) | CSS Modules conventions |
-| [docs/API_REFERENCE.md](./docs/API_REFERENCE.md) | REST API documentation |
-| [docs/CONTRIBUTING.md](./docs/CONTRIBUTING.md) | Contribution guidelines |
+| [docs/TESTING_GUIDE.md](./docs/TESTING_GUIDE.md)   | Testing practices with Vitest         |
+| [docs/STYLING_GUIDE.md](./docs/STYLING_GUIDE.md)   | CSS Modules conventions               |
+| [docs/API_REFERENCE.md](./docs/API_REFERENCE.md)   | REST API documentation                |
+| [docs/CONTRIBUTING.md](./docs/CONTRIBUTING.md)     | Contribution guidelines               |
 
 ### Deployment
-| Document | Description |
-|----------|-------------|
+
+| Document                                               | Description                   |
+| ------------------------------------------------------ | ----------------------------- |
 | [docs/DEPLOYMENT_GUIDE.md](./docs/DEPLOYMENT_GUIDE.md) | Step-by-step deployment guide |
-| [docs/AWS_DEPLOYMENT.md](./docs/AWS_DEPLOYMENT.md) | AWS infrastructure details |
+| [docs/AWS_DEPLOYMENT.md](./docs/AWS_DEPLOYMENT.md)     | AWS infrastructure details    |
 
 ### Roadmap
-| Document | Description |
-|----------|-------------|
+
+| Document                                                     | Description                                              |
+| ------------------------------------------------------------ | -------------------------------------------------------- |
 | [docs/FUTURE_ENHANCEMENTS.md](./docs/FUTURE_ENHANCEMENTS.md) | Future features roadmap (database, auth, payments, etc.) |
 
 ---

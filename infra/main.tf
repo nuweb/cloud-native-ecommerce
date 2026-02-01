@@ -175,6 +175,41 @@ resource "aws_cloudfront_origin_access_control" "main" {
 }
 
 # =============================================================================
+# CloudFront Response Headers Policy (for CORS and Module Federation)
+# =============================================================================
+
+resource "aws_cloudfront_response_headers_policy" "cors_policy" {
+  name    = "${var.project_name}-cors-policy"
+  comment = "CORS policy for Module Federation - required for mobile Safari"
+
+  cors_config {
+    access_control_allow_credentials = false
+
+    access_control_allow_headers {
+      items = ["*"]
+    }
+
+    access_control_allow_methods {
+      items = ["GET", "HEAD", "OPTIONS"]
+    }
+
+    access_control_allow_origins {
+      items = ["*"]
+    }
+
+    access_control_max_age_sec = 3600
+
+    origin_override = true
+  }
+
+  security_headers_config {
+    content_type_options {
+      override = true
+    }
+  }
+}
+
+# =============================================================================
 # S3 Bucket Policies (Allow CloudFront Access)
 # =============================================================================
 
@@ -324,6 +359,9 @@ resource "aws_cloudfront_distribution" "main" {
     viewer_protocol_policy = "redirect-to-https"
     compress               = true
 
+    # Add CORS headers for Module Federation (Safari compatibility)
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.cors_policy.id
+
     forwarded_values {
       query_string = false
       cookies {
@@ -344,6 +382,9 @@ resource "aws_cloudfront_distribution" "main" {
     target_origin_id       = "products"
     viewer_protocol_policy = "redirect-to-https"
     compress               = true
+
+    # Add CORS headers for Module Federation (Safari compatibility)
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.cors_policy.id
 
     forwarded_values {
       query_string = false
@@ -366,6 +407,9 @@ resource "aws_cloudfront_distribution" "main" {
     viewer_protocol_policy = "redirect-to-https"
     compress               = true
 
+    # Add CORS headers for Module Federation (Safari compatibility)
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.cors_policy.id
+
     forwarded_values {
       query_string = false
       cookies {
@@ -378,17 +422,26 @@ resource "aws_cloudfront_distribution" "main" {
     max_ttl     = 86400
   }
 
-  # Custom error response for SPA routing
+  # Custom error response for SPA routing and Module Federation errors
   custom_error_response {
-    error_code         = 404
-    response_code      = 200
-    response_page_path = "/index.html"
+    error_code            = 404
+    response_code         = 200
+    response_page_path    = "/index.html"
+    error_caching_min_ttl = 0
   }
 
   custom_error_response {
-    error_code         = 403
-    response_code      = 200
-    response_page_path = "/index.html"
+    error_code            = 403
+    response_code         = 200
+    response_page_path    = "/error.html"
+    error_caching_min_ttl = 0
+  }
+
+  custom_error_response {
+    error_code            = 500
+    response_code         = 200
+    response_page_path    = "/error.html"
+    error_caching_min_ttl = 0
   }
 
   restrictions {

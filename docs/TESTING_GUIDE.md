@@ -21,23 +21,23 @@ This document covers testing practices, tools, and patterns used in this project
 
 This project uses a comprehensive testing strategy:
 
-| Test Type | Tool | Location | Purpose |
-|-----------|------|----------|---------|
-| **Unit** | Vitest | `*.spec.tsx` | Components, hooks, utilities |
-| **Integration** | Vitest | `*.spec.ts` | Services, API handlers |
-| **E2E** | Playwright | `apps/shop-e2e` | Full user flows |
+| Test Type       | Tool       | Location        | Purpose                      |
+| --------------- | ---------- | --------------- | ---------------------------- |
+| **Unit**        | Vitest     | `*.spec.tsx`    | Components, hooks, utilities |
+| **Integration** | Vitest     | `*.spec.ts`     | Services, API handlers       |
+| **E2E**         | Playwright | `apps/shop-e2e` | Full user flows              |
 
 ---
 
 ## Testing Stack
 
-| Tool | Purpose |
-|------|---------|
-| **Vitest** | Test runner (Jest-compatible, Vite-native) |
-| **@testing-library/react** | Component testing utilities |
-| **@testing-library/jest-dom** | Custom DOM matchers |
-| **jsdom** | DOM environment for Node |
-| **Supertest** | HTTP assertions for API |
+| Tool                          | Purpose                                    |
+| ----------------------------- | ------------------------------------------ |
+| **Vitest**                    | Test runner (Jest-compatible, Vite-native) |
+| **@testing-library/react**    | Component testing utilities                |
+| **@testing-library/jest-dom** | Custom DOM matchers                        |
+| **jsdom**                     | DOM environment for Node                   |
+| **Supertest**                 | HTTP assertions for API                    |
 
 ---
 
@@ -98,19 +98,19 @@ const mockProduct = {
 describe('ProductCard', () => {
   it('should render product name', () => {
     render(<ProductCard {...mockProduct} />);
-    
+
     expect(screen.getByText('Test Product')).toBeInTheDocument();
   });
 
   it('should render formatted price', () => {
     render(<ProductCard {...mockProduct} />);
-    
+
     expect(screen.getByText('$99.99')).toBeInTheDocument();
   });
 
   it('should render product image with alt text', () => {
     render(<ProductCard {...mockProduct} />);
-    
+
     const image = screen.getByRole('img');
     expect(image).toHaveAttribute('src', mockProduct.imageUrl);
     expect(image).toHaveAttribute('alt', mockProduct.name);
@@ -128,24 +128,24 @@ describe('ProductCard interactions', () => {
   it('should call onSelect when clicked', async () => {
     const onSelect = vi.fn();
     const user = userEvent.setup();
-    
+
     render(<ProductCard {...mockProduct} onSelect={onSelect} />);
-    
+
     await user.click(screen.getByRole('button'));
-    
+
     expect(onSelect).toHaveBeenCalledWith(mockProduct.id);
   });
 
   it('should call onSelect when Enter key pressed', async () => {
     const onSelect = vi.fn();
     const user = userEvent.setup();
-    
+
     render(<ProductCard {...mockProduct} onSelect={onSelect} />);
-    
+
     const card = screen.getByRole('button');
     card.focus();
     await user.keyboard('{Enter}');
-    
+
     expect(onSelect).toHaveBeenCalledWith(mockProduct.id);
   });
 });
@@ -171,7 +171,7 @@ const renderWithRouter = (initialRoute = '/products/1') => {
 describe('ProductDetail', () => {
   it('should render product from route param', async () => {
     renderWithRouter('/products/1');
-    
+
     // Wait for async loading
     expect(await screen.findByText('Product Name')).toBeInTheDocument();
   });
@@ -186,13 +186,13 @@ import { render, screen, waitFor } from '@testing-library/react';
 describe('ProductList', () => {
   it('should show loading state initially', () => {
     render(<ProductList />);
-    
+
     expect(screen.getByRole('status')).toBeInTheDocument(); // LoadingSpinner
   });
 
   it('should render products after loading', async () => {
     render(<ProductList />);
-    
+
     // Wait for products to load
     expect(await screen.findByText('Product 1')).toBeInTheDocument();
     expect(screen.getByText('Product 2')).toBeInTheDocument();
@@ -201,9 +201,9 @@ describe('ProductList', () => {
   it('should show error message on failure', async () => {
     // Mock API to fail
     vi.mocked(fetchProducts).mockRejectedValueOnce(new Error('Network error'));
-    
+
     render(<ProductList />);
-    
+
     expect(await screen.findByText(/error/i)).toBeInTheDocument();
   });
 });
@@ -255,10 +255,9 @@ describe('useProducts', () => {
   });
 
   it('should refetch when filter changes', async () => {
-    const { result, rerender } = renderHook(
-      ({ filter }) => useProducts({ filter }),
-      { initialProps: { filter: {} } }
-    );
+    const { result, rerender } = renderHook(({ filter }) => useProducts({ filter }), {
+      initialProps: { filter: {} },
+    });
 
     await waitFor(() => expect(result.current.isLoading).toBe(false));
 
@@ -355,7 +354,7 @@ describe('ProductsService', () => {
       result.items.forEach((product: Product) => {
         expect(
           product.name.toLowerCase().includes('laptop') ||
-          product.description.toLowerCase().includes('laptop')
+            product.description.toLowerCase().includes('laptop')
         ).toBe(true);
       });
     });
@@ -408,9 +407,7 @@ describe('API Endpoints', () => {
     });
 
     it('should support pagination', async () => {
-      const response = await request(app)
-        .get('/api/products')
-        .query({ page: 2, pageSize: 5 });
+      const response = await request(app).get('/api/products').query({ page: 2, pageSize: 5 });
 
       expect(response.body.page).toBe(2);
       expect(response.body.pageSize).toBe(5);
@@ -539,7 +536,9 @@ import { render, screen } from '@testing-library/react';
 import { ProductCard } from './product-card';
 
 // 1. Mock data at the top
-const mockProduct = { /* ... */ };
+const mockProduct = {
+  /* ... */
+};
 
 // 2. Helper functions
 const renderComponent = (props = {}) => {
@@ -550,25 +549,39 @@ const renderComponent = (props = {}) => {
 describe('ProductCard', () => {
   // Rendering tests
   describe('rendering', () => {
-    it('should render product name', () => { /* ... */ });
-    it('should render product price', () => { /* ... */ });
+    it('should render product name', () => {
+      /* ... */
+    });
+    it('should render product price', () => {
+      /* ... */
+    });
   });
 
   // Interaction tests
   describe('interactions', () => {
-    it('should call onSelect when clicked', () => { /* ... */ });
+    it('should call onSelect when clicked', () => {
+      /* ... */
+    });
   });
 
   // Edge cases
   describe('edge cases', () => {
-    it('should handle missing image', () => { /* ... */ });
-    it('should show out of stock badge', () => { /* ... */ });
+    it('should handle missing image', () => {
+      /* ... */
+    });
+    it('should show out of stock badge', () => {
+      /* ... */
+    });
   });
 
   // Accessibility
   describe('accessibility', () => {
-    it('should have correct aria labels', () => { /* ... */ });
-    it('should be keyboard navigable', () => { /* ... */ });
+    it('should have correct aria labels', () => {
+      /* ... */
+    });
+    it('should be keyboard navigable', () => {
+      /* ... */
+    });
   });
 });
 ```
@@ -589,7 +602,7 @@ afterEach(() => {
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -608,38 +621,38 @@ Object.defineProperty(window, 'matchMedia', {
 
 ### Do's
 
-| Practice | Reason |
-|----------|--------|
-| Test behavior, not implementation | Tests survive refactors |
-| Use semantic queries | `getByRole`, `getByLabelText` |
-| One assertion focus per test | Clear failure messages |
-| Test edge cases | Empty states, errors, loading |
-| Use test IDs sparingly | Only when no semantic option |
+| Practice                          | Reason                        |
+| --------------------------------- | ----------------------------- |
+| Test behavior, not implementation | Tests survive refactors       |
+| Use semantic queries              | `getByRole`, `getByLabelText` |
+| One assertion focus per test      | Clear failure messages        |
+| Test edge cases                   | Empty states, errors, loading |
+| Use test IDs sparingly            | Only when no semantic option  |
 
 ### Don'ts
 
-| Anti-Pattern | Problem |
-|--------------|---------|
-| Testing internal state | Brittle tests |
-| Snapshot everything | Hard to review changes |
-| Testing library code | Trust your dependencies |
+| Anti-Pattern            | Problem                 |
+| ----------------------- | ----------------------- |
+| Testing internal state  | Brittle tests           |
+| Snapshot everything     | Hard to review changes  |
+| Testing library code    | Trust your dependencies |
 | Coupling to CSS classes | Breaks on style changes |
-| Ignoring async behavior | Race conditions |
+| Ignoring async behavior | Race conditions         |
 
 ### Query Priority
 
 ```tsx
 // Best (accessible)
-screen.getByRole('button', { name: /submit/i })
-screen.getByLabelText(/email/i)
-screen.getByText(/welcome/i)
+screen.getByRole('button', { name: /submit/i });
+screen.getByLabelText(/email/i);
+screen.getByText(/welcome/i);
 
 // Good (semantic)
-screen.getByAltText(/profile/i)
-screen.getByTitle(/close/i)
+screen.getByAltText(/profile/i);
+screen.getByTitle(/close/i);
 
 // Acceptable (last resort)
-screen.getByTestId('custom-element')
+screen.getByTestId('custom-element');
 ```
 
 ### Async Best Practices
@@ -654,7 +667,7 @@ await waitFor(() => {
 });
 
 // ❌ Bad - arbitrary delays
-await new Promise(r => setTimeout(r, 1000));
+await new Promise((r) => setTimeout(r, 1000));
 expect(screen.getByText('Loaded')).toBeInTheDocument();
 ```
 
@@ -694,12 +707,12 @@ test: {
 
 ### What to Cover
 
-| Priority | What to Test |
-|----------|--------------|
-| **High** | Business logic, hooks, utilities |
+| Priority   | What to Test                          |
+| ---------- | ------------------------------------- |
+| **High**   | Business logic, hooks, utilities      |
 | **Medium** | Component behavior, user interactions |
-| **Low** | Simple presentational components |
-| **Skip** | Third-party libraries, generated code |
+| **Low**    | Simple presentational components      |
+| **Skip**   | Third-party libraries, generated code |
 
 ---
 

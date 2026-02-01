@@ -2,11 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Product, ProductFilter } from '@org/models';
 import { useProducts, useCategories } from '@org/shop-data';
-import {
-  ProductGrid,
-  LoadingSpinner,
-  ErrorMessage,
-} from '@org/shop-shared-ui';
+import { ProductGrid, LoadingSpinner, ErrorMessage } from '@org/shop-shared-ui';
 import styles from './product-list.module.css';
 
 export function ProductList() {
@@ -106,11 +102,7 @@ export function ProductList() {
           </select>
 
           <label className={styles['checkbox-label']}>
-            <input
-              type="checkbox"
-              checked={inStockOnly}
-              onChange={handleInStockChange}
-            />
+            <input type="checkbox" checked={inStockOnly} onChange={handleInStockChange} />
             In Stock Only
           </label>
         </div>

@@ -19,11 +19,11 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-
 const mockProduct = {
   id: '1',
   name: 'Wireless Bluetooth Headphones',
-  description: 'Premium wireless headphones with active noise cancellation and 30-hour battery life.',
+  description:
+    'Premium wireless headphones with active noise cancellation and 30-hour battery life.',
   price: 99.99,
   category: 'Electronics',
   imageUrl: 'https://via.placeholder.com/600x400',
@@ -103,7 +103,11 @@ describe('ProductDetail', () => {
     );
 
     expect(screen.getByText('Wireless Bluetooth Headphones')).toBeInTheDocument();
-    expect(screen.getByText('Premium wireless headphones with active noise cancellation and 30-hour battery life.')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'Premium wireless headphones with active noise cancellation and 30-hour battery life.'
+      )
+    ).toBeInTheDocument();
     expect(screen.getByText('$99.99')).toBeInTheDocument();
     expect(screen.getAllByText('Electronics')[0]).toBeInTheDocument();
     expect(screen.getByText('✓ In Stock')).toBeInTheDocument();

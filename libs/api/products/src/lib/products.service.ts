@@ -6,7 +6,8 @@ export class ProductsService {
     {
       id: '1',
       name: 'Wireless Bluetooth Headphones',
-      description: 'Premium quality wireless headphones with active noise cancellation, 30-hour battery life, and superior sound quality.',
+      description:
+        'Premium quality wireless headphones with active noise cancellation, 30-hour battery life, and superior sound quality.',
       price: 199.99,
       category: 'Electronics',
       imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500',
@@ -17,7 +18,8 @@ export class ProductsService {
     {
       id: '2',
       name: 'Smart Watch Pro',
-      description: 'Advanced fitness tracking, heart rate monitoring, GPS, and smartphone integration in a sleek design.',
+      description:
+        'Advanced fitness tracking, heart rate monitoring, GPS, and smartphone integration in a sleek design.',
       price: 349.99,
       category: 'Electronics',
       imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500',
@@ -39,7 +41,8 @@ export class ProductsService {
     {
       id: '4',
       name: 'Stainless Steel Water Bottle',
-      description: 'Insulated water bottle that keeps drinks cold for 24 hours or hot for 12 hours.',
+      description:
+        'Insulated water bottle that keeps drinks cold for 24 hours or hot for 12 hours.',
       price: 24.99,
       category: 'Home & Kitchen',
       imageUrl: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=500',
@@ -50,7 +53,8 @@ export class ProductsService {
     {
       id: '5',
       name: 'Yoga Mat Premium',
-      description: 'Non-slip, eco-friendly yoga mat with extra cushioning for comfortable practice.',
+      description:
+        'Non-slip, eco-friendly yoga mat with extra cushioning for comfortable practice.',
       price: 45.99,
       category: 'Sports',
       imageUrl: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=500',
@@ -143,29 +147,21 @@ export class ProductsService {
     // Apply filters
     if (filter) {
       if (filter.category) {
-        filteredProducts = filteredProducts.filter(
-          p => p.category === filter.category
-        );
+        filteredProducts = filteredProducts.filter((p) => p.category === filter.category);
       }
       if (filter.minPrice !== undefined) {
-        filteredProducts = filteredProducts.filter(
-          p => p.price >= filter.minPrice!
-        );
+        filteredProducts = filteredProducts.filter((p) => p.price >= filter.minPrice!);
       }
       if (filter.maxPrice !== undefined) {
-        filteredProducts = filteredProducts.filter(
-          p => p.price <= filter.maxPrice!
-        );
+        filteredProducts = filteredProducts.filter((p) => p.price <= filter.maxPrice!);
       }
       if (filter.inStock !== undefined) {
-        filteredProducts = filteredProducts.filter(
-          p => p.inStock === filter.inStock
-        );
+        filteredProducts = filteredProducts.filter((p) => p.inStock === filter.inStock);
       }
       if (filter.searchTerm) {
         const searchLower = filter.searchTerm.toLowerCase();
         filteredProducts = filteredProducts.filter(
-          p =>
+          (p) =>
             p.name.toLowerCase().includes(searchLower) ||
             p.description.toLowerCase().includes(searchLower) ||
             p.category.toLowerCase().includes(searchLower)
@@ -190,11 +186,11 @@ export class ProductsService {
   }
 
   getProductById(id: string): Product | undefined {
-    return this.products.find(p => p.id === id);
+    return this.products.find((p) => p.id === id);
   }
 
   getCategories(): string[] {
-    const categories = new Set(this.products.map(p => p.category));
+    const categories = new Set(this.products.map((p) => p.category));
     return Array.from(categories).sort();
   }
 }

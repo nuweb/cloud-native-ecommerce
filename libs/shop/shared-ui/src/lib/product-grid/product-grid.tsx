@@ -19,11 +19,7 @@ export function ProductGrid({ products, onProductSelect }: ProductGridProps) {
   return (
     <div className={styles['product-grid']}>
       {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          onProductClick={onProductSelect}
-        />
+        <ProductCard key={product.id} product={product} onProductClick={onProductSelect} />
       ))}
     </div>
   );

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error - Nx Shop Demo</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+          Cantarell, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px;
+      }
+
+      .error-container {
+        text-align: center;
+        padding: 40px 30px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        max-width: 500px;
+        width: 100%;
+        animation: slideIn 0.3s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .error-icon {
+        font-size: 64px;
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        color: #d32f2f;
+        font-size: 24px;
+        margin-bottom: 15px;
+        font-weight: 600;
+      }
+
+      p {
+        color: #666;
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 25px;
+      }
+
+      button {
+        margin-top: 10px;
+        padding: 12px 30px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .help-section {
+        margin-top: 30px;
+        padding-top: 25px;
+        border-top: 1px solid #eee;
+      }
+
+      .help-section h2 {
+        font-size: 14px;
+        color: #999;
+        font-weight: 500;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      ul {
+        text-align: left;
+        margin-top: 10px;
+        padding-left: 20px;
+      }
+
+      li {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 8px;
+        line-height: 1.5;
+      }
+
+      .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        color: #667eea;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+
+      .back-link:hover {
+        color: #764ba2;
+      }
+
+      @media (max-width: 480px) {
+        .error-container {
+          padding: 30px 20px;
+        }
+
+        h1 {
+          font-size: 20px;
+        }
+
+        .error-icon {
+          font-size: 48px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="error-container">
+      <div class="error-icon">⚠️</div>
+      <h1>Oops! Something went wrong</h1>
+      <p>We're having trouble loading this page. This could be a temporary issue.</p>
+
+      <button onclick="window.location.reload()">🔄 Reload Page</button>
+
+      <a href="/" class="back-link">← Go to Home</a>
+
+      <div class="help-section">
+        <h2>Still having issues?</h2>
+        <ul>
+          <li>Check your internet connection</li>
+          <li>Clear your browser cache and cookies</li>
+          <li>Try using a different browser</li>
+          <li>Wait a few minutes and try again</li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      // Log error for debugging
+      console.error('Error page loaded at:', new Date().toISOString());
+      console.error('User agent:', navigator.userAgent);
+      console.error('Current URL:', window.location.href);
+    </script>
+  </body>
+</html>

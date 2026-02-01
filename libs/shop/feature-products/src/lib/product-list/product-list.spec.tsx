@@ -239,11 +239,7 @@ describe('ProductList', () => {
     fireEvent.click(nextButton);
 
     await waitFor(() => {
-      expect(mockUseProducts).toHaveBeenCalledWith(
-        expect.any(Object),
-        2,
-        12
-      );
+      expect(mockUseProducts).toHaveBeenCalledWith(expect.any(Object), 2, 12);
     });
   });
 

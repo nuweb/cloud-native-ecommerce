@@ -33,9 +33,7 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
     >
       <div className={styles['product-image']}>
         <img src={product.imageUrl} alt={product.name} />
-        {!product.inStock && (
-          <div className={styles['out-of-stock-overlay']}>Out of Stock</div>
-        )}
+        {!product.inStock && <div className={styles['out-of-stock-overlay']}>Out of Stock</div>}
       </div>
       <div className={styles['product-info']}>
         <h3 className={styles['product-name']}>{product.name}</h3>
@@ -50,9 +48,7 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
           </span>
           <span className={styles['review-count']}>({product.reviewCount})</span>
         </div>
-        <div className={styles['product-price']}>
-          ${product.price.toFixed(2)}
-        </div>
+        <div className={styles['product-price']}>${product.price.toFixed(2)}</div>
       </div>
     </div>
   );

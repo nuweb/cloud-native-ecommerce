@@ -26,5 +26,17 @@ const config: ModuleFederationConfig = {
 export default composePlugins(
   withNx(),
   withReact(),
-  withModuleFederation(config, { dts: false })
+  withModuleFederation(config, { dts: false }),
+  (config) => {
+    // Ensure Safari-compatible output
+    if (config.output) {
+      config.output.chunkLoadingGlobal = 'webpackChunkshell';
+      config.output.uniqueName = 'shell';
+    }
+
+    // Ensure proper target for Safari compatibility
+    config.target = 'web';
+
+    return config;
+  }
 );

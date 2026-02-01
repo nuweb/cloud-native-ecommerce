@@ -18,6 +18,9 @@
   "nx": {
     "sourceRoot": "libs/shared/test-utils/src",
     "projectType": "library",
-    "tags": ["type:utility", "scope:shared"]
+    "tags": [
+      "type:utility",
+      "scope:shared"
+    ]
   }
 }

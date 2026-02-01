@@ -52,9 +52,7 @@ export function ProductDetail() {
       <div className={styles['product-detail']}>
         <div className={styles['product-image']}>
           <img src={product.imageUrl} alt={product.name} />
-          {!product.inStock && (
-            <div className={styles['out-of-stock-overlay']}>Out of Stock</div>
-          )}
+          {!product.inStock && <div className={styles['out-of-stock-overlay']}>Out of Stock</div>}
         </div>
 
         <div className={styles['product-info']}>
@@ -69,14 +67,10 @@ export function ProductDetail() {
                 </span>
               ))}
             </span>
-            <span className={styles['review-count']}>
-              ({product.reviewCount} reviews)
-            </span>
+            <span className={styles['review-count']}>({product.reviewCount} reviews)</span>
           </div>
 
-          <div className={styles['product-price']}>
-            ${product.price.toFixed(2)}
-          </div>
+          <div className={styles['product-price']}>${product.price.toFixed(2)}</div>
 
           <div className={styles['product-availability']}>
             {product.inStock ? (

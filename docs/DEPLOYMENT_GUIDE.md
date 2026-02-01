@@ -38,6 +38,7 @@ A comprehensive guide to deploying an Nx Module Federation React application to 
 ```
 
 **Components:**
+
 - **CloudFront**: CDN for frontend assets with SSL
 - **S3 Buckets**: Static hosting for shell and remote modules
 - **App Runner**: Managed container service for Node.js API
@@ -83,6 +84,7 @@ aws configure
 1. Go to AWS Console → IAM → Users → Create User
 2. User name: `github-actions-deployer`
 3. Attach policies:
+
    - `AmazonS3FullAccess`
    - `CloudFrontFullAccess`
    - `AmazonEC2ContainerRegistryFullAccess`
@@ -174,6 +176,7 @@ Add these secrets:
 Create `infra/` directory with these files:
 
 **infra/variables.tf**
+
 ```hcl
 variable "aws_region" {
   description = "AWS region"
@@ -202,12 +205,14 @@ variable "root_domain" {
 ```
 
 **infra/main.tf** - See project's `infra/main.tf` for full configuration including:
+
 - S3 buckets for shell, products, product-detail
 - CloudFront distribution with cache behaviors
 - ACM certificate with DNS validation
 - Route 53 records
 
 **infra/api.tf** - See project's `infra/api.tf` for:
+
 - ECR repository
 - App Runner service
 - IAM roles
@@ -232,6 +237,7 @@ terraform apply -auto-approve
 ### 4.3 Terraform Output
 
 After successful apply, you'll see:
+
 ```
 Outputs:
 api_service_url = "https://xxxxx.us-east-1.awsapprunner.com"
@@ -249,7 +255,7 @@ website_url = "https://ecommerce.yourdomain.info"
 
 ```typescript
 // apps/api/src/main.ts
-const host = process.env.HOST ?? '0.0.0.0';  // NOT 'localhost'
+const host = process.env.HOST ?? '0.0.0.0'; // NOT 'localhost'
 const port = process.env.PORT ? Number(process.env.PORT) : 3333;
 
 app.listen(port, host, () => {
@@ -303,11 +309,7 @@ const config: ModuleFederationConfig = {
   remotes: isProd ? prodRemotes : devRemotes,
 };
 
-export default composePlugins(
-  withNx(),
-  withReact(),
-  withModuleFederation(config, { dts: false })
-);
+export default composePlugins(withNx(), withReact(), withModuleFederation(config, { dts: false }));
 ```
 
 ### 5.4 Dockerfile
@@ -347,6 +349,7 @@ CMD ["node", "main.js"]
 Create `.github/workflows/deploy.yml` - see project file for full configuration.
 
 Key points:
+
 - Build frontend apps with `NODE_ENV=production`
 - Upload to S3 with correct paths:
   - Shell → `s3://bucket-shell/`
@@ -396,12 +399,14 @@ aws cloudfront get-distribution --id YOUR_DISTRIBUTION_ID --query "Distribution.
 **Cause**: API binding to `localhost` instead of `0.0.0.0`.
 
 **Fix**:
+
 ```typescript
 // apps/api/src/main.ts
-const host = process.env.HOST ?? '0.0.0.0';  // Changed from 'localhost'
+const host = process.env.HOST ?? '0.0.0.0'; // Changed from 'localhost'
 ```
 
 **Verify**:
+
 ```bash
 # Check App Runner logs
 aws logs get-log-events \
@@ -419,6 +424,7 @@ aws logs get-log-events \
 **Cause**: Files uploaded to wrong S3 path.
 
 **Fix**: Upload with correct path prefix:
+
 ```yaml
 # .github/workflows/deploy.yml
 - name: Deploy Products to S3
@@ -442,6 +448,7 @@ aws logs get-log-events \
 **Symptoms**: "Error acquiring the state lock"
 
 **Fix**:
+
 ```bash
 # Remove stale lock file
 rm -f infra/.terraform.tfstate.lock.info
@@ -458,6 +465,7 @@ terraform apply -lock=false
 **Symptoms**: Terraform error "Service with provided name already exists"
 
 **Fix**:
+
 ```bash
 # Delete existing service
 SERVICE_ARN=$(aws apprunner list-services --query "ServiceSummaryList[?ServiceName=='SERVICE_NAME'].ServiceArn" --output text)
@@ -475,6 +483,7 @@ terraform apply
 **Symptoms**: Terraform error "CNAMEAlreadyExists"
 
 **Fix**:
+
 ```bash
 # Find and delete existing distribution
 DIST_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[?@=='yourdomain.info']].Id" --output text)
@@ -545,15 +554,15 @@ terraform force-unlock LOCK_ID
 
 ## Cost Estimation (Monthly)
 
-| Service | Estimated Cost |
-|---------|---------------|
-| Route 53 Hosted Zone | $0.50 |
-| CloudFront | $0 - $10 (depends on traffic) |
-| S3 | $0 - $5 (depends on storage) |
-| ACM Certificate | Free |
-| App Runner (0.25 vCPU, 0.5GB) | ~$5-15 |
-| ECR | $0 - $1 |
-| **Total** | **~$6-30/month** |
+| Service                       | Estimated Cost                |
+| ----------------------------- | ----------------------------- |
+| Route 53 Hosted Zone          | $0.50                         |
+| CloudFront                    | $0 - $10 (depends on traffic) |
+| S3                            | $0 - $5 (depends on storage)  |
+| ACM Certificate               | Free                          |
+| App Runner (0.25 vCPU, 0.5GB) | ~$5-15                        |
+| ECR                           | $0 - $1                       |
+| **Total**                     | **~$6-30/month**              |
 
 ---
 

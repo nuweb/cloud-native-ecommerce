@@ -172,30 +172,58 @@ jobs:
 
       - name: Deploy Shell to S3
         run: |
+          # Upload all files except HTML/JSON with JavaScript content type and long cache
           aws s3 sync dist/shell s3://cloud-native-ecommerce-shell-production \
             --delete \
-            --cache-control "public, max-age=31536000, immutable" \
             --exclude "index.html" \
-            --exclude "*.json"
+            --exclude "error.html" \
+            --exclude "assets/error.html" \
+            --exclude "*.json" \
+            --content-type "application/javascript; charset=utf-8" \
+            --cache-control "public, max-age=31536000, immutable"
           
+          # Upload HTML with no cache
           aws s3 cp dist/shell/index.html s3://cloud-native-ecommerce-shell-production/index.html \
+            --content-type "text/html; charset=utf-8" \
             --cache-control "public, max-age=0, must-revalidate"
+          
+          # Upload error.html if it exists (check both root and assets folder)
+          if [ -f "dist/shell/error.html" ]; then
+            aws s3 cp dist/shell/error.html s3://cloud-native-ecommerce-shell-production/error.html \
+              --content-type "text/html; charset=utf-8" \
+              --cache-control "public, max-age=3600"
+          elif [ -f "dist/shell/assets/error.html" ]; then
+            aws s3 cp dist/shell/assets/error.html s3://cloud-native-ecommerce-shell-production/error.html \
+              --content-type "text/html; charset=utf-8" \
+              --cache-control "public, max-age=3600"
+          fi
+          
+          # Upload JSON files if they exist
+          if ls dist/shell/*.json 1> /dev/null 2>&1; then
+            aws s3 sync dist/shell s3://cloud-native-ecommerce-shell-production \
+              --exclude "*" \
+              --include "*.json" \
+              --content-type "application/json; charset=utf-8" \
+              --cache-control "public, max-age=0, must-revalidate"
+          fi
 
       - name: Deploy Products to S3
         run: |
           aws s3 sync dist/products s3://cloud-native-ecommerce-products-production/remotes/products \
             --delete \
-            --cache-control "public, max-age=31536000, immutable" \
             --exclude "index.html" \
-            --exclude "*.json"
+            --exclude "*.json" \
+            --content-type "application/javascript; charset=utf-8" \
+            --cache-control "public, max-age=31536000, immutable"
 
       - name: Deploy Product-Detail to S3
         run: |
           aws s3 sync dist/product-detail s3://cloud-native-ecommerce-product-detail-production/remotes/product-detail \
             --delete \
-            --cache-control "public, max-age=31536000, immutable" \
             --exclude "index.html" \
-            --exclude "*.json"
+            --exclude "*.json" \
+            --content-type "application/javascript; charset=utf-8" \
+            --cache-control "public, max-age=31536000, immutable"
 
       - name: Invalidate CloudFront cache
         run: |

@@ -34,30 +34,30 @@ This document outlines the roadmap for enhancing the Cloud-Native E-Commerce Pla
 
 ### 1.2 Current State
 
-| Feature | Status |
-|---------|--------|
-| Product Catalog | ✅ Implemented |
-| Product Details | ✅ Implemented |
+| Feature                    | Status         |
+| -------------------------- | -------------- |
+| Product Catalog            | ✅ Implemented |
+| Product Details            | ✅ Implemented |
 | Product Search & Filtering | ✅ Implemented |
-| REST API | ✅ Implemented |
+| REST API                   | ✅ Implemented |
 | Microfrontend Architecture | ✅ Implemented |
-| AWS Deployment | ✅ Implemented |
-| CI/CD Pipeline | ✅ Implemented |
+| AWS Deployment             | ✅ Implemented |
+| CI/CD Pipeline             | ✅ Implemented |
 
 ### 1.3 Target State
 
-| Feature | Priority |
-|---------|----------|
+| Feature              | Priority    |
+| -------------------- | ----------- |
 | Database Integration | 🔴 Critical |
-| User Authentication | 🔴 Critical |
-| Shopping Cart | 🔴 Critical |
-| Checkout Flow | 🔴 Critical |
-| Order Management | 🟡 High |
-| Payment Processing | 🟡 High |
-| User Profiles | 🟡 High |
-| Advanced Search | 🟢 Medium |
-| Analytics | 🟢 Medium |
-| Recommendations | 🔵 Low |
+| User Authentication  | 🔴 Critical |
+| Shopping Cart        | 🔴 Critical |
+| Checkout Flow        | 🔴 Critical |
+| Order Management     | 🟡 High     |
+| Payment Processing   | 🟡 High     |
+| User Profiles        | 🟡 High     |
+| Advanced Search      | 🟢 Medium   |
+| Analytics            | 🟢 Medium   |
+| Recommendations      | 🔵 Low      |
 
 ---
 
@@ -115,14 +115,14 @@ Replace in-memory data storage with persistent database solutions.
 
 #### Option A: Amazon RDS (PostgreSQL) - Recommended
 
-| Aspect | Details |
-|--------|---------|
-| **Service** | Amazon RDS for PostgreSQL |
+| Aspect       | Details                                |
+| ------------ | -------------------------------------- |
+| **Service**  | Amazon RDS for PostgreSQL              |
 | **Instance** | db.t3.micro (dev) / db.t3.small (prod) |
-| **Storage** | 20GB GP2 SSD |
-| **Multi-AZ** | Yes (production) |
-| **Backup** | Automated daily backups |
-| **Cost** | ~$15-50/month |
+| **Storage**  | 20GB GP2 SSD                           |
+| **Multi-AZ** | Yes (production)                       |
+| **Backup**   | Automated daily backups                |
+| **Cost**     | ~$15-50/month                          |
 
 ```hcl
 # Terraform Configuration
@@ -152,23 +152,23 @@ resource "aws_db_instance" "main" {
 
 #### Option B: Amazon DynamoDB (NoSQL)
 
-| Aspect | Details |
-|--------|---------|
-| **Service** | Amazon DynamoDB |
-| **Capacity** | On-demand |
-| **Tables** | Products, Users, Orders, Carts |
-| **Cost** | Pay per request (~$1-10/month low traffic) |
+| Aspect       | Details                                    |
+| ------------ | ------------------------------------------ |
+| **Service**  | Amazon DynamoDB                            |
+| **Capacity** | On-demand                                  |
+| **Tables**   | Products, Users, Orders, Carts             |
+| **Cost**     | Pay per request (~$1-10/month low traffic) |
 
 **Best for:** High-scale, simple access patterns
 
 #### Option C: PlanetScale (Serverless MySQL)
 
-| Aspect | Details |
-|--------|---------|
-| **Service** | PlanetScale |
-| **Plan** | Hobby (free) / Scaler |
+| Aspect       | Details                                |
+| ------------ | -------------------------------------- |
+| **Service**  | PlanetScale                            |
+| **Plan**     | Hobby (free) / Scaler                  |
 | **Features** | Branching, non-blocking schema changes |
-| **Cost** | Free tier available |
+| **Cost**     | Free tier available                    |
 
 **Best for:** Serverless-first, easy scaling
 
@@ -341,11 +341,11 @@ const CACHE_KEYS = {
 
 // Cache TTL (seconds)
 const CACHE_TTL = {
-  product: 3600,      // 1 hour
-  productList: 300,   // 5 minutes
-  categories: 3600,   // 1 hour
-  cart: 86400,        // 24 hours
-  session: 604800,    // 7 days
+  product: 3600, // 1 hour
+  productList: 300, // 5 minutes
+  categories: 3600, // 1 hour
+  cart: 86400, // 24 hours
+  session: 604800, // 7 days
 };
 ```
 
@@ -426,12 +426,12 @@ Implement secure user authentication and role-based access control.
 
 #### Option A: Amazon Cognito - Recommended
 
-| Feature | Details |
-|---------|---------|
-| **Service** | AWS Cognito User Pools |
-| **Features** | Sign-up, Sign-in, MFA, Social login |
-| **Integration** | Native AWS, easy with Amplify |
-| **Cost** | Free tier: 50,000 MAU |
+| Feature         | Details                             |
+| --------------- | ----------------------------------- |
+| **Service**     | AWS Cognito User Pools              |
+| **Features**    | Sign-up, Sign-in, MFA, Social login |
+| **Integration** | Native AWS, easy with Amplify       |
+| **Cost**        | Free tier: 50,000 MAU               |
 
 ```hcl
 # Terraform - Cognito User Pool
@@ -508,21 +508,21 @@ resource "aws_cognito_user_pool_client" "web" {
 
 #### Option B: Auth0
 
-| Feature | Details |
-|---------|---------|
-| **Service** | Auth0 by Okta |
+| Feature      | Details                                 |
+| ------------ | --------------------------------------- |
+| **Service**  | Auth0 by Okta                           |
 | **Features** | Universal login, extensive integrations |
-| **SDKs** | @auth0/auth0-react |
-| **Cost** | Free tier: 7,000 MAU |
+| **SDKs**     | @auth0/auth0-react                      |
+| **Cost**     | Free tier: 7,000 MAU                    |
 
 #### Option C: Custom JWT Implementation
 
-| Feature | Details |
-|---------|---------|
-| **Library** | jsonwebtoken, bcrypt |
-| **Storage** | PostgreSQL + Redis |
+| Feature      | Details                         |
+| ------------ | ------------------------------- |
+| **Library**  | jsonwebtoken, bcrypt            |
+| **Storage**  | PostgreSQL + Redis              |
 | **Features** | Full control, no vendor lock-in |
-| **Cost** | Infrastructure only |
+| **Cost**     | Infrastructure only             |
 
 ### 3.4 Authorization Model (RBAC)
 
@@ -532,7 +532,7 @@ enum Role {
   GUEST = 'guest',
   CUSTOMER = 'customer',
   ADMIN = 'admin',
-  SUPER_ADMIN = 'super_admin'
+  SUPER_ADMIN = 'super_admin',
 }
 
 // Permission Definitions
@@ -542,33 +542,31 @@ enum Permission {
   CREATE_PRODUCT = 'products:create',
   UPDATE_PRODUCT = 'products:update',
   DELETE_PRODUCT = 'products:delete',
-  
+
   // Orders
   READ_OWN_ORDERS = 'orders:read:own',
   READ_ALL_ORDERS = 'orders:read:all',
   UPDATE_ORDER_STATUS = 'orders:update:status',
-  
+
   // Users
   READ_OWN_PROFILE = 'users:read:own',
   UPDATE_OWN_PROFILE = 'users:update:own',
   READ_ALL_USERS = 'users:read:all',
   MANAGE_USERS = 'users:manage',
-  
+
   // Cart
   MANAGE_OWN_CART = 'cart:manage:own',
-  
+
   // Reviews
   CREATE_REVIEW = 'reviews:create',
   DELETE_OWN_REVIEW = 'reviews:delete:own',
-  MODERATE_REVIEWS = 'reviews:moderate'
+  MODERATE_REVIEWS = 'reviews:moderate',
 }
 
 // Role-Permission Mapping
 const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
-  [Role.GUEST]: [
-    Permission.READ_PRODUCTS,
-  ],
-  
+  [Role.GUEST]: [Permission.READ_PRODUCTS],
+
   [Role.CUSTOMER]: [
     Permission.READ_PRODUCTS,
     Permission.READ_OWN_ORDERS,
@@ -578,7 +576,7 @@ const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     Permission.CREATE_REVIEW,
     Permission.DELETE_OWN_REVIEW,
   ],
-  
+
   [Role.ADMIN]: [
     Permission.READ_PRODUCTS,
     Permission.CREATE_PRODUCT,
@@ -588,7 +586,7 @@ const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     Permission.READ_ALL_USERS,
     Permission.MODERATE_REVIEWS,
   ],
-  
+
   [Role.SUPER_ADMIN]: [
     // All permissions
     ...Object.values(Permission),
@@ -640,15 +638,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{
-      user,
-      isAuthenticated: !!user,
-      isLoading,
-      login,
-      logout,
-      register,
-      resetPassword
-    }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated: !!user,
+        isLoading,
+        login,
+        logout,
+        register,
+        resetPassword,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -709,13 +709,9 @@ const verifier = CognitoJwtVerifier.create({
   clientId: process.env.COGNITO_CLIENT_ID!,
 });
 
-export async function authMiddleware(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export async function authMiddleware(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
-  
+
   if (!authHeader?.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'No token provided' });
   }
@@ -727,7 +723,7 @@ export async function authMiddleware(
     req.user = {
       id: payload.sub,
       email: payload.email as string,
-      role: payload['custom:role'] as Role || Role.CUSTOMER,
+      role: (payload['custom:role'] as Role) || Role.CUSTOMER,
     };
     next();
   } catch (error) {
@@ -895,7 +891,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (isAuthenticated) {
       // Fetch cart from API
       const response = await fetch('/api/cart', {
-        headers: { Authorization: `Bearer ${getToken()}` }
+        headers: { Authorization: `Bearer ${getToken()}` },
       });
       setCart(await response.json());
     } else {
@@ -913,9 +909,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${getToken()}`
+          Authorization: `Bearer ${getToken()}`,
         },
-        body: JSON.stringify({ productId, quantity })
+        body: JSON.stringify({ productId, quantity }),
       });
       setCart(await response.json());
     } else {
@@ -929,16 +925,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // ... other methods
 
   return (
-    <CartContext.Provider value={{
-      cart,
-      isLoading,
-      itemCount: cart?.itemCount || 0,
-      subtotal: cart?.subtotal || 0,
-      addItem,
-      updateItem,
-      removeItem,
-      clearCart
-    }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        isLoading,
+        itemCount: cart?.itemCount || 0,
+        subtotal: cart?.subtotal || 0,
+        addItem,
+        updateItem,
+        removeItem,
+        clearCart,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
@@ -964,7 +962,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
           <EmptyCartMessage />
         ) : (
           <ul className="cart-items">
-            {cart?.items.map(item => (
+            {cart?.items.map((item) => (
               <CartItemRow
                 key={item.id}
                 item={item}
@@ -1037,24 +1035,14 @@ export function CheckoutPage() {
 
       <div className="checkout-content">
         <div className="checkout-main">
-          {step === 'cart' && (
-            <CartReview onNext={() => setStep('shipping')} />
-          )}
+          {step === 'cart' && <CartReview onNext={() => setStep('shipping')} />}
           {step === 'shipping' && (
-            <ShippingForm
-              onBack={() => setStep('cart')}
-              onNext={() => setStep('payment')}
-            />
+            <ShippingForm onBack={() => setStep('cart')} onNext={() => setStep('payment')} />
           )}
           {step === 'payment' && (
-            <PaymentForm
-              onBack={() => setStep('shipping')}
-              onNext={() => setStep('confirm')}
-            />
+            <PaymentForm onBack={() => setStep('shipping')} onNext={() => setStep('confirm')} />
           )}
-          {step === 'confirm' && (
-            <OrderConfirmation onBack={() => setStep('payment')} />
-          )}
+          {step === 'confirm' && <OrderConfirmation onBack={() => setStep('payment')} />}
         </div>
 
         <div className="checkout-sidebar">
@@ -1159,7 +1147,9 @@ export class OrdersService {
 
       // 2. Validate stock
       for (const item of items) {
-        const product = await tx.query('SELECT stock FROM products WHERE id = $1', [item.product_id]);
+        const product = await tx.query('SELECT stock FROM products WHERE id = $1', [
+          item.product_id,
+        ]);
         if (product.stock < item.quantity) {
           throw new Error(`Insufficient stock for ${item.product_id}`);
         }
@@ -1167,23 +1157,48 @@ export class OrdersService {
 
       // 3. Create order
       const orderNumber = this.generateOrderNumber();
-      const order = await tx.query(`
+      const order = await tx.query(
+        `
         INSERT INTO orders (order_number, user_id, subtotal, tax, shipping_cost, total, shipping_address, billing_address)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING *
-      `, [orderNumber, userId, data.subtotal, data.tax, data.shippingCost, data.total, data.shippingAddress, data.billingAddress]);
+      `,
+        [
+          orderNumber,
+          userId,
+          data.subtotal,
+          data.tax,
+          data.shippingCost,
+          data.total,
+          data.shippingAddress,
+          data.billingAddress,
+        ]
+      );
 
       // 4. Create order items
       for (const item of items) {
-        await tx.query(`
+        await tx.query(
+          `
           INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, total_price)
           VALUES ($1, $2, $3, $4, $5, $6)
-        `, [order.id, item.product_id, item.product_name, item.quantity, item.unit_price, item.total_price]);
+        `,
+          [
+            order.id,
+            item.product_id,
+            item.product_name,
+            item.quantity,
+            item.unit_price,
+            item.total_price,
+          ]
+        );
       }
 
       // 5. Update stock
       for (const item of items) {
-        await tx.query('UPDATE products SET stock = stock - $1 WHERE id = $2', [item.quantity, item.product_id]);
+        await tx.query('UPDATE products SET stock = stock - $1 WHERE id = $2', [
+          item.quantity,
+          item.product_id,
+        ]);
       }
 
       // 6. Clear cart
@@ -1199,16 +1214,16 @@ export class OrdersService {
 
   async updateOrderStatus(orderId: string, status: OrderStatus): Promise<Order> {
     const validTransitions: Record<OrderStatus, OrderStatus[]> = {
-      'pending': ['payment_pending', 'cancelled'],
-      'payment_pending': ['paid', 'payment_failed', 'cancelled'],
-      'paid': ['processing', 'cancelled'],
-      'processing': ['shipped'],
-      'shipped': ['delivered', 'returned'],
-      'delivered': ['returned'],
+      pending: ['payment_pending', 'cancelled'],
+      payment_pending: ['paid', 'payment_failed', 'cancelled'],
+      paid: ['processing', 'cancelled'],
+      processing: ['shipped'],
+      shipped: ['delivered', 'returned'],
+      delivered: ['returned'],
     };
 
     const order = await this.getById(orderId);
-    
+
     if (!validTransitions[order.status]?.includes(status)) {
       throw new Error(`Invalid status transition: ${order.status} -> ${status}`);
     }
@@ -1231,14 +1246,14 @@ export function OrderHistory() {
   return (
     <div className="order-history">
       <h1>Order History</h1>
-      
+
       {isLoading ? (
         <LoadingSpinner />
       ) : orders.length === 0 ? (
         <EmptyState message="No orders yet" />
       ) : (
         <div className="orders-list">
-          {orders.map(order => (
+          {orders.map((order) => (
             <OrderCard key={order.id} order={order} />
           ))}
         </div>
@@ -1254,20 +1269,16 @@ function OrderCard({ order }: { order: Order }) {
         <span className="order-number">Order #{order.orderNumber}</span>
         <OrderStatusBadge status={order.status} />
       </div>
-      
-      <div className="order-date">
-        Placed on {formatDate(order.createdAt)}
-      </div>
-      
+
+      <div className="order-date">Placed on {formatDate(order.createdAt)}</div>
+
       <div className="order-items">
-        {order.items.slice(0, 3).map(item => (
+        {order.items.slice(0, 3).map((item) => (
           <OrderItemPreview key={item.id} item={item} />
         ))}
-        {order.items.length > 3 && (
-          <span>+{order.items.length - 3} more items</span>
-        )}
+        {order.items.length > 3 && <span>+{order.items.length - 3} more items</span>}
       </div>
-      
+
       <div className="order-footer">
         <span className="order-total">Total: ${order.total.toFixed(2)}</span>
         <Link to={`/orders/${order.id}`}>View Details</Link>
@@ -1347,7 +1358,11 @@ export class StripeService {
     });
   }
 
-  async createPaymentIntent(orderId: string, amount: number, currency = 'usd'): Promise<Stripe.PaymentIntent> {
+  async createPaymentIntent(
+    orderId: string,
+    amount: number,
+    currency = 'usd'
+  ): Promise<Stripe.PaymentIntent> {
     return await this.stripe.paymentIntents.create({
       amount: Math.round(amount * 100), // Convert to cents
       currency,
@@ -1468,11 +1483,9 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
-      
-      {errorMessage && (
-        <div className="error-message">{errorMessage}</div>
-      )}
-      
+
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
+
       <button type="submit" disabled={!stripe || isProcessing}>
         {isProcessing ? 'Processing...' : 'Pay Now'}
       </button>
@@ -1483,13 +1496,13 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
 
 ### 6.6 Supported Payment Methods
 
-| Method | Implementation |
-|--------|----------------|
-| **Credit/Debit Cards** | Stripe Payment Element |
-| **Apple Pay** | Stripe Payment Request Button |
-| **Google Pay** | Stripe Payment Request Button |
-| **PayPal** | PayPal JS SDK integration |
-| **Buy Now Pay Later** | Klarna/Afterpay via Stripe |
+| Method                 | Implementation                |
+| ---------------------- | ----------------------------- |
+| **Credit/Debit Cards** | Stripe Payment Element        |
+| **Apple Pay**          | Stripe Payment Request Button |
+| **Google Pay**         | Stripe Payment Request Button |
+| **PayPal**             | PayPal JS SDK integration     |
+| **Buy Now Pay Later**  | Klarna/Afterpay via Stripe    |
 
 ### 6.7 Implementation Tasks
 
@@ -1540,20 +1553,20 @@ export function ReviewForm({ productId, onSubmit }: ReviewFormProps) {
   return (
     <form onSubmit={handleSubmit}>
       <StarRating value={rating} onChange={setRating} />
-      
+
       <input
         type="text"
         placeholder="Review title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      
+
       <textarea
         placeholder="Write your review..."
         value={comment}
         onChange={(e) => setComment(e.target.value)}
       />
-      
+
       <button type="submit">Submit Review</button>
     </form>
   );
@@ -1567,16 +1580,16 @@ export function ReviewForm({ productId, onSubmit }: ReviewFormProps) {
 export class RecommendationsService {
   // Collaborative filtering
   async getPersonalizedRecommendations(userId: string): Promise<Product[]>;
-  
+
   // Content-based filtering
   async getSimilarProducts(productId: string): Promise<Product[]>;
-  
+
   // Purchase history based
   async getFrequentlyBoughtTogether(productId: string): Promise<Product[]>;
-  
+
   // Trending products
   async getTrendingProducts(category?: string): Promise<Product[]>;
-  
+
   // Recently viewed
   async getRecentlyViewed(userId: string): Promise<Product[]>;
 }
@@ -1601,14 +1614,14 @@ interface Notification {
 await emailService.send({
   to: user.email,
   template: 'order-shipped',
-  data: { orderNumber, trackingUrl }
+  data: { orderNumber, trackingUrl },
 });
 
 // Push notifications (optional)
 await pushService.send(userId, {
   title: 'Order Shipped!',
   body: `Your order #${orderNumber} is on its way.`,
-  data: { orderId }
+  data: { orderId },
 });
 ```
 
@@ -1654,35 +1667,32 @@ await pushService.send(userId, {
 
 #### Option A: Algolia (Recommended for speed-to-market)
 
-| Feature | Details |
-|---------|---------|
-| **Service** | Algolia |
+| Feature      | Details                                   |
+| ------------ | ----------------------------------------- |
+| **Service**  | Algolia                                   |
 | **Features** | Instant search, typo tolerance, analytics |
-| **SDKs** | react-instantsearch |
-| **Cost** | Free tier: 10k searches/month |
+| **SDKs**     | react-instantsearch                       |
+| **Cost**     | Free tier: 10k searches/month             |
 
 ```typescript
 // Algolia Integration
 import algoliasearch from 'algoliasearch';
 import { InstantSearch, SearchBox, Hits, RefinementList } from 'react-instantsearch';
 
-const searchClient = algoliasearch(
-  process.env.ALGOLIA_APP_ID!,
-  process.env.ALGOLIA_SEARCH_KEY!
-);
+const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_SEARCH_KEY!);
 
 export function ProductSearch() {
   return (
     <InstantSearch searchClient={searchClient} indexName="products">
       <SearchBox placeholder="Search products..." />
-      
+
       <div className="search-layout">
         <aside className="filters">
           <RefinementList attribute="category" />
           <RefinementList attribute="brand" />
           <RangeSlider attribute="price" />
         </aside>
-        
+
         <main className="results">
           <Hits hitComponent={ProductHit} />
         </main>
@@ -1694,26 +1704,26 @@ export function ProductSearch() {
 
 #### Option B: Amazon OpenSearch
 
-| Feature | Details |
-|---------|---------|
-| **Service** | Amazon OpenSearch Service |
+| Feature      | Details                          |
+| ------------ | -------------------------------- |
+| **Service**  | Amazon OpenSearch Service        |
 | **Features** | Full Elasticsearch compatibility |
-| **Cost** | ~$20-100/month |
+| **Cost**     | ~$20-100/month                   |
 
 #### Option C: PostgreSQL Full-Text Search
 
-| Feature | Details |
-|---------|---------|
+| Feature      | Details                     |
+| ------------ | --------------------------- |
 | **Built-in** | PostgreSQL tsvector/tsquery |
-| **Features** | Basic full-text search |
-| **Cost** | No additional cost |
+| **Features** | Basic full-text search      |
+| **Cost**     | No additional cost          |
 
 ```sql
 -- PostgreSQL Full-Text Search
-CREATE INDEX idx_products_search ON products 
+CREATE INDEX idx_products_search ON products
 USING GIN (to_tsvector('english', name || ' ' || description));
 
-SELECT * FROM products 
+SELECT * FROM products
 WHERE to_tsvector('english', name || ' ' || description) @@ plainto_tsquery('english', 'wireless headphones');
 ```
 
@@ -1792,7 +1802,7 @@ const ecommerceEvents = {
       item_name: product.name,
       item_category: product.category,
       price: product.price,
-    }
+    },
   }),
 
   // Cart Events
@@ -1803,7 +1813,7 @@ const ecommerceEvents = {
       item_name: product.name,
       quantity,
       value: product.price * quantity,
-    }
+    },
   }),
 
   // Checkout Events
@@ -1811,11 +1821,11 @@ const ecommerceEvents = {
     event: 'begin_checkout',
     properties: {
       value: cart.subtotal,
-      items: cart.items.map(item => ({
+      items: cart.items.map((item) => ({
         item_id: item.productId,
         quantity: item.quantity,
       })),
-    }
+    },
   }),
 
   // Purchase Event
@@ -1828,21 +1838,21 @@ const ecommerceEvents = {
       tax: order.tax,
       shipping: order.shippingCost,
       items: order.items,
-    }
+    },
   }),
 };
 ```
 
 ### 9.3 Key Metrics Dashboard
 
-| Metric | Description |
-|--------|-------------|
-| **Conversion Rate** | Visitors → Customers |
-| **Average Order Value** | Total revenue / Orders |
-| **Cart Abandonment Rate** | Abandoned carts / Total carts |
+| Metric                        | Description                     |
+| ----------------------------- | ------------------------------- |
+| **Conversion Rate**           | Visitors → Customers            |
+| **Average Order Value**       | Total revenue / Orders          |
+| **Cart Abandonment Rate**     | Abandoned carts / Total carts   |
 | **Customer Acquisition Cost** | Marketing spend / New customers |
-| **Customer Lifetime Value** | Average revenue per customer |
-| **Product Performance** | Views, add-to-carts, purchases |
+| **Customer Lifetime Value**   | Average revenue per customer    |
+| **Product Performance**       | Views, add-to-carts, purchases  |
 
 ### 9.4 Implementation Tasks
 
@@ -1884,14 +1894,14 @@ const ecommerceEvents = {
 
 ### 10.2 Proposed Microfrontends
 
-| Remote | Port | Routes | Owner Team |
-|--------|------|--------|------------|
-| **cart** | 4203 | /cart/* | Cart Team |
-| **checkout** | 4204 | /checkout/* | Payments Team |
-| **account** | 4205 | /account/* | Identity Team |
-| **orders** | 4206 | /orders/* | Orders Team |
-| **search** | 4207 | /search/* | Discovery Team |
-| **admin** | 4208 | /admin/* | Platform Team |
+| Remote       | Port | Routes       | Owner Team     |
+| ------------ | ---- | ------------ | -------------- |
+| **cart**     | 4203 | /cart/\*     | Cart Team      |
+| **checkout** | 4204 | /checkout/\* | Payments Team  |
+| **account**  | 4205 | /account/\*  | Identity Team  |
+| **orders**   | 4206 | /orders/\*   | Orders Team    |
+| **search**   | 4207 | /search/\*   | Discovery Team |
+| **admin**    | 4208 | /admin/\*    | Platform Team  |
 
 ### 10.3 Account Microfrontend
 
@@ -2036,13 +2046,15 @@ const events = {
 // Event Publisher
 class EventPublisher {
   async publish(event: DomainEvent): Promise<void> {
-    await snsClient.send(new PublishCommand({
-      TopicArn: process.env.EVENTS_TOPIC_ARN,
-      Message: JSON.stringify(event),
-      MessageAttributes: {
-        eventType: { DataType: 'String', StringValue: event.eventType },
-      },
-    }));
+    await snsClient.send(
+      new PublishCommand({
+        TopicArn: process.env.EVENTS_TOPIC_ARN,
+        Message: JSON.stringify(event),
+        MessageAttributes: {
+          eventType: { DataType: 'String', StringValue: event.eventType },
+        },
+      })
+    );
   }
 }
 
@@ -2073,10 +2085,10 @@ class OrderEventHandler {
     aws apprunner update-service \
       --service-arn $SERVICE_ARN \
       --traffic-routing-configuration '{"percentage": 10}'
-    
+
     # Monitor metrics
     sleep 300
-    
+
     # If successful, roll out to 100%
     aws apprunner update-service \
       --service-arn $SERVICE_ARN \
@@ -2101,12 +2113,12 @@ class OrderEventHandler {
 
 ### 12.1 Priority Levels
 
-| Priority | Criteria |
-|----------|----------|
+| Priority        | Criteria                                    |
+| --------------- | ------------------------------------------- |
 | 🔴 **Critical** | Required for basic e-commerce functionality |
-| 🟡 **High** | Important for user experience & business |
-| 🟢 **Medium** | Enhances platform capabilities |
-| 🔵 **Low** | Nice-to-have features |
+| 🟡 **High**     | Important for user experience & business    |
+| 🟢 **Medium**   | Enhances platform capabilities              |
+| 🔵 **Low**      | Nice-to-have features                       |
 
 ### 12.2 Implementation Roadmap
 
@@ -2157,9 +2169,9 @@ Database ──────┬──▶ Authentication ──▶ Shopping Cart �
                ├──▶ Order Management ──▶ Payment Processing
                │
                └──▶ User Profiles ──▶ Wishlist ──▶ Reviews
-               
+
 Search ──▶ Recommendations
-               
+
 Analytics (can run in parallel)
 
 Microfrontends (can run in parallel after core features)
@@ -2171,15 +2183,15 @@ Microfrontends (can run in parallel after core features)
 
 ### 13.1 Current vs Target Architecture
 
-| Aspect | Current | Target |
-|--------|---------|--------|
-| **Data** | In-memory | PostgreSQL + Redis |
-| **Auth** | None | Cognito + JWT |
-| **Cart** | None | Persistent + Guest |
-| **Payments** | None | Stripe integration |
-| **Search** | Basic filter | Algolia/Elasticsearch |
-| **API** | Single service | API Gateway + Services |
-| **Events** | Synchronous | Event-driven (SQS/SNS) |
+| Aspect       | Current        | Target                 |
+| ------------ | -------------- | ---------------------- |
+| **Data**     | In-memory      | PostgreSQL + Redis     |
+| **Auth**     | None           | Cognito + JWT          |
+| **Cart**     | None           | Persistent + Guest     |
+| **Payments** | None           | Stripe integration     |
+| **Search**   | Basic filter   | Algolia/Elasticsearch  |
+| **API**      | Single service | API Gateway + Services |
+| **Events**   | Synchronous    | Event-driven (SQS/SNS) |
 
 ### 13.2 Target Architecture Diagram
 
@@ -2281,12 +2293,12 @@ FROM_EMAIL=orders@ecommerce.veeracs.info
 
 ### C. Related Documentation
 
-| Document | Description |
-|----------|-------------|
-| [SYSTEM_DESIGN.md](./SYSTEM_DESIGN.md) | Current system architecture |
-| [TECH_STACK.md](./TECH_STACK.md) | Technology stack details |
-| [AWS_DEPLOYMENT.md](./AWS_DEPLOYMENT.md) | Deployment guide |
-| [MODULE_FEDERATION_GUIDE.md](./MODULE_FEDERATION_GUIDE.md) | MFE best practices |
+| Document                                                   | Description                 |
+| ---------------------------------------------------------- | --------------------------- |
+| [SYSTEM_DESIGN.md](./SYSTEM_DESIGN.md)                     | Current system architecture |
+| [TECH_STACK.md](./TECH_STACK.md)                           | Technology stack details    |
+| [AWS_DEPLOYMENT.md](./AWS_DEPLOYMENT.md)                   | Deployment guide            |
+| [MODULE_FEDERATION_GUIDE.md](./MODULE_FEDERATION_GUIDE.md) | MFE best practices          |
 
 ---
 

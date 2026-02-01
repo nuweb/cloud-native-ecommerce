@@ -7,7 +7,7 @@ interface ErrorMessageProps {
 
 export function ErrorMessage({
   message = 'An error occurred. Please try again.',
-  onRetry
+  onRetry,
 }: ErrorMessageProps) {
   return (
     <div className={styles['error-container']}>

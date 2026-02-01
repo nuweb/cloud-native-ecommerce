@@ -44,6 +44,7 @@ This guide explains how to deploy the Cloud-Native E-Commerce application to AWS
 ### Required AWS Permissions
 
 Your AWS user/role needs permissions for:
+
 - S3 (bucket management)
 - CloudFront (distribution management)
 - ACM (certificate management)
@@ -99,10 +100,10 @@ terraform apply
 
 ### S3 Buckets
 
-| Bucket | Purpose | Path Pattern |
-|--------|---------|--------------|
-| `cloud-native-ecommerce-shell-production` | Shell (Host) app | `/` |
-| `cloud-native-ecommerce-products-production` | Products remote | `/remotes/products/*` |
+| Bucket                                             | Purpose               | Path Pattern                |
+| -------------------------------------------------- | --------------------- | --------------------------- |
+| `cloud-native-ecommerce-shell-production`          | Shell (Host) app      | `/`                         |
+| `cloud-native-ecommerce-products-production`       | Products remote       | `/remotes/products/*`       |
 | `cloud-native-ecommerce-product-detail-production` | Product Detail remote | `/remotes/product-detail/*` |
 
 ### CloudFront Distribution
@@ -164,28 +165,29 @@ docker push YOUR_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/cloud-native-ecommer
 
 Add these secrets to your GitHub repository:
 
-| Secret | Description |
-|--------|-------------|
-| `AWS_ACCESS_KEY_ID` | AWS access key for deployment |
-| `AWS_SECRET_ACCESS_KEY` | AWS secret key for deployment |
+| Secret                  | Description                           |
+| ----------------------- | ------------------------------------- |
+| `AWS_ACCESS_KEY_ID`     | AWS access key for deployment         |
+| `AWS_SECRET_ACCESS_KEY` | AWS secret key for deployment         |
 | `NX_CLOUD_ACCESS_TOKEN` | (Optional) Nx Cloud token for caching |
 
 To add secrets:
+
 1. Go to repository Settings → Secrets and variables → Actions
 2. Click "New repository secret"
 3. Add each secret
 
 ## Cost Estimation
 
-| Service | Estimated Monthly Cost |
-|---------|----------------------|
-| S3 (3 buckets) | ~$1-5 |
-| CloudFront | ~$5-20 (depends on traffic) |
-| Route 53 | ~$0.50 (hosted zone) |
-| ACM Certificate | Free |
-| App Runner | ~$5-25 (depends on usage) |
-| ECR | ~$1 (storage) |
-| **Total** | **~$15-50/month** |
+| Service         | Estimated Monthly Cost      |
+| --------------- | --------------------------- |
+| S3 (3 buckets)  | ~$1-5                       |
+| CloudFront      | ~$5-20 (depends on traffic) |
+| Route 53        | ~$0.50 (hosted zone)        |
+| ACM Certificate | Free                        |
+| App Runner      | ~$5-25 (depends on usage)   |
+| ECR             | ~$1 (storage)               |
+| **Total**       | **~$15-50/month**           |
 
 ## Troubleshooting
 
@@ -234,7 +236,7 @@ terraform destroy
 
 After deployment:
 
-| Service | URL |
-|---------|-----|
+| Service | URL                            |
+| ------- | ------------------------------ |
 | Website | https://ecommerce.veeracs.info |
-| API | https://api.veeracs.info |
+| API     | https://api.veeracs.info       |

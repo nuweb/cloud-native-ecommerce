@@ -5,7 +5,9 @@
   "nx": {
     "projectType": "application",
     "sourceRoot": "apps/shell/src",
-    "tags": ["scope:shop"],
+    "tags": [
+      "scope:shop"
+    ],
     "targets": {
       "build": {
         "executor": "@nx/webpack:webpack",
@@ -16,18 +18,25 @@
           "index": "apps/shell/index.html",
           "main": "apps/shell/src/main.tsx",
           "tsConfig": "apps/shell/tsconfig.app.json",
-          "assets": ["apps/shell/src/favicon.ico", "apps/shell/src/assets"],
-          "styles": ["apps/shell/src/styles.css"]
+          "assets": [
+            "apps/shell/src/favicon.ico",
+            "apps/shell/src/assets"
+          ],
+          "styles": [
+            "apps/shell/src/styles.css"
+          ]
         },
         "configurations": {
           "production": {
             "outputFilename": "[name].[contenthash].js",
             "optimization": true,
-          "extractLicenses": false,
+            "extractLicenses": false,
             "sourceMap": false
           }
         },
-        "outputs": ["{options.outputPath}"]
+        "outputs": [
+          "{options.outputPath}"
+        ]
       },
       "serve": {
         "executor": "@nx/react:module-federation-dev-server",
@@ -35,14 +44,19 @@
           "buildTarget": "shell:build",
           "port": 4200,
           "host": "localhost",
-          "devRemotes": ["products", "product-detail"]
+          "devRemotes": [
+            "products",
+            "product-detail"
+          ]
         },
         "configurations": {
           "production": {
             "buildTarget": "shell:build:production"
           }
         },
-        "dependsOn": ["@org/api:serve"]
+        "dependsOn": [
+          "@org/api:serve"
+        ]
       }
     }
   },

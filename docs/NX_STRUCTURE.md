@@ -44,15 +44,15 @@ cloud-native-ecommerce/
 
 ### Key Files
 
-| File | Purpose |
-|------|---------|
-| `nx.json` | Nx workspace configuration, task runners, plugins |
-| `tsconfig.base.json` | Shared TypeScript settings and path mappings |
-| `package.json` | Root dependencies and workspace scripts |
-| `pnpm-workspace.yaml` | Defines which folders are workspace packages |
-| `pnpm-lock.yaml` | Locked dependency versions |
-| `.eslintrc.json` / `eslint.config.js` | Root ESLint configuration |
-| `.prettierrc` | Prettier formatting rules |
+| File                                  | Purpose                                           |
+| ------------------------------------- | ------------------------------------------------- |
+| `nx.json`                             | Nx workspace configuration, task runners, plugins |
+| `tsconfig.base.json`                  | Shared TypeScript settings and path mappings      |
+| `package.json`                        | Root dependencies and workspace scripts           |
+| `pnpm-workspace.yaml`                 | Defines which folders are workspace packages      |
+| `pnpm-lock.yaml`                      | Locked dependency versions                        |
+| `.eslintrc.json` / `eslint.config.js` | Root ESLint configuration                         |
+| `.prettierrc`                         | Prettier formatting rules                         |
 
 ### `tsconfig.base.json` Path Mappings
 
@@ -73,6 +73,7 @@ cloud-native-ecommerce/
 ```
 
 These mappings allow importing libraries by alias:
+
 ```typescript
 import { Product } from '@org/models';
 import { useProducts } from '@org/shop-data';
@@ -121,13 +122,13 @@ apps/shell/
 
 ### Application Types
 
-| App | Type | Build Tool | Port | Description |
-|-----|------|------------|------|-------------|
-| `shell` | MFE Host | Webpack | 4200 | Main entry, loads remotes |
-| `products` | MFE Remote | Webpack | 4201 | Product listing |
-| `product-detail` | MFE Remote | Webpack | 4202 | Product details |
-| `shop` | Standalone | Vite | 4200 | Alternative monolithic app |
-| `api` | Backend | esbuild | 3333 | REST API server |
+| App              | Type       | Build Tool | Port | Description                |
+| ---------------- | ---------- | ---------- | ---- | -------------------------- |
+| `shell`          | MFE Host   | Webpack    | 4200 | Main entry, loads remotes  |
+| `products`       | MFE Remote | Webpack    | 4201 | Product listing            |
+| `product-detail` | MFE Remote | Webpack    | 4202 | Product details            |
+| `shop`           | Standalone | Vite       | 4200 | Alternative monolithic app |
+| `api`            | Backend    | esbuild    | 3333 | REST API server            |
 
 ### `project.json` Example
 
@@ -199,20 +200,20 @@ libs/shop/shared-ui/
 
 ### Library Types
 
-| Type | Prefix | Purpose | Example |
-|------|--------|---------|---------|
-| **feature** | `feature-` | Smart components, business logic | `feature-products` |
-| **data** | `data` | Data fetching, state management | `data` |
-| **ui** | `shared-ui` | Presentational components | `shared-ui` |
-| **util** | `test-utils` | Utility functions | `test-utils` |
-| **models** | `models` | TypeScript interfaces | `models` |
+| Type        | Prefix       | Purpose                          | Example            |
+| ----------- | ------------ | -------------------------------- | ------------------ |
+| **feature** | `feature-`   | Smart components, business logic | `feature-products` |
+| **data**    | `data`       | Data fetching, state management  | `data`             |
+| **ui**      | `shared-ui`  | Presentational components        | `shared-ui`        |
+| **util**    | `test-utils` | Utility functions                | `test-utils`       |
+| **models**  | `models`     | TypeScript interfaces            | `models`           |
 
 ### Library Scopes
 
-| Scope | Location | Purpose |
-|-------|----------|---------|
-| `shop` | `libs/shop/` | Frontend-specific code |
-| `api` | `libs/api/` | Backend-specific code |
+| Scope    | Location       | Purpose                               |
+| -------- | -------------- | ------------------------------------- |
+| `shop`   | `libs/shop/`   | Frontend-specific code                |
+| `api`    | `libs/api/`    | Backend-specific code                 |
 | `shared` | `libs/shared/` | Code shared across frontend & backend |
 
 ### Public API (`index.ts`)
@@ -266,23 +267,19 @@ infra/
       "cache": true
     }
   },
-  "plugins": [
-    "@nx/webpack/plugin",
-    "@nx/vite/plugin",
-    "@nx/eslint/plugin"
-  ]
+  "plugins": ["@nx/webpack/plugin", "@nx/vite/plugin", "@nx/eslint/plugin"]
 }
 ```
 
 ### TypeScript Configs
 
-| Config | Purpose |
-|--------|---------|
-| `tsconfig.base.json` | Shared settings, path mappings |
-| `tsconfig.json` | Root config, references all projects |
-| `tsconfig.app.json` | App build configuration |
-| `tsconfig.lib.json` | Library build configuration |
-| `tsconfig.spec.json` | Test configuration |
+| Config               | Purpose                              |
+| -------------------- | ------------------------------------ |
+| `tsconfig.base.json` | Shared settings, path mappings       |
+| `tsconfig.json`      | Root config, references all projects |
+| `tsconfig.app.json`  | App build configuration              |
+| `tsconfig.lib.json`  | Library build configuration          |
+| `tsconfig.spec.json` | Test configuration                   |
 
 ---
 
@@ -290,30 +287,30 @@ infra/
 
 ### Projects
 
-| Type | Pattern | Example |
-|------|---------|---------|
-| App | `{name}` | `shell`, `api`, `shop` |
+| Type        | Pattern                  | Example                 |
+| ----------- | ------------------------ | ----------------------- |
+| App         | `{name}`                 | `shell`, `api`, `shop`  |
 | Feature lib | `{scope}-feature-{name}` | `shop-feature-products` |
-| Data lib | `{scope}-data` | `shop-data` |
-| UI lib | `{scope}-shared-ui` | `shop-shared-ui` |
-| Util lib | `{scope}-{name}` | `shared-test-utils` |
+| Data lib    | `{scope}-data`           | `shop-data`             |
+| UI lib      | `{scope}-shared-ui`      | `shop-shared-ui`        |
+| Util lib    | `{scope}-{name}`         | `shared-test-utils`     |
 
 ### Import Aliases
 
-| Pattern | Example |
-|---------|---------|
+| Pattern                      | Example                      |
+| ---------------------------- | ---------------------------- |
 | `@org/{scope}-{type}-{name}` | `@org/shop-feature-products` |
-| `@org/{type}` | `@org/models` |
+| `@org/{type}`                | `@org/models`                |
 
 ### Files
 
-| Type | Pattern | Example |
-|------|---------|---------|
-| Component | `{name}.tsx` | `product-card.tsx` |
-| Test | `{name}.spec.tsx` | `product-card.spec.tsx` |
-| Styles | `{name}.module.css` | `product-card.module.css` |
-| Hook | `use-{name}.ts` | `use-products.ts` |
-| Service | `{name}.service.ts` | `products.service.ts` |
+| Type      | Pattern             | Example                   |
+| --------- | ------------------- | ------------------------- |
+| Component | `{name}.tsx`        | `product-card.tsx`        |
+| Test      | `{name}.spec.tsx`   | `product-card.spec.tsx`   |
+| Styles    | `{name}.module.css` | `product-card.module.css` |
+| Hook      | `use-{name}.ts`     | `use-products.ts`         |
+| Service   | `{name}.service.ts` | `products.service.ts`     |
 
 ---
 
@@ -332,23 +329,23 @@ Projects are tagged for dependency enforcement:
 
 ### Tag Categories
 
-| Category | Values |
-|----------|--------|
-| `scope` | `shop`, `api`, `shared` |
-| `type` | `app`, `feature`, `data`, `ui`, `util` |
+| Category | Values                                 |
+| -------- | -------------------------------------- |
+| `scope`  | `shop`, `api`, `shared`                |
+| `type`   | `app`, `feature`, `data`, `ui`, `util` |
 
 ### Dependency Rules
 
 Configured in `.eslintrc.json` or `eslint.config.js`:
 
-| Source | Can Import |
-|--------|------------|
-| `scope:shop` | `scope:shop`, `scope:shared` |
-| `scope:api` | `scope:api`, `scope:shared` |
-| `scope:shared` | `scope:shared` only |
-| `type:feature` | All types |
-| `type:ui` | `type:ui`, `scope:shared` |
-| `type:data` | `type:data`, `scope:shared` |
+| Source         | Can Import                   |
+| -------------- | ---------------------------- |
+| `scope:shop`   | `scope:shop`, `scope:shared` |
+| `scope:api`    | `scope:api`, `scope:shared`  |
+| `scope:shared` | `scope:shared` only          |
+| `type:feature` | All types                    |
+| `type:ui`      | `type:ui`, `scope:shared`    |
+| `type:data`    | `type:data`, `scope:shared`  |
 
 ---
 
@@ -410,14 +407,14 @@ npx nx graph
 
 ## Common Commands
 
-| Command | Description |
-|---------|-------------|
-| `npx nx graph` | Open dependency graph |
-| `npx nx show project shell` | Show project details |
-| `npx nx list` | List installed plugins |
-| `npx nx generate @nx/react:library` | Generate new library |
-| `npx nx affected -t test` | Test affected projects |
-| `npx nx run-many -t build` | Build all projects |
+| Command                             | Description            |
+| ----------------------------------- | ---------------------- |
+| `npx nx graph`                      | Open dependency graph  |
+| `npx nx show project shell`         | Show project details   |
+| `npx nx list`                       | List installed plugins |
+| `npx nx generate @nx/react:library` | Generate new library   |
+| `npx nx affected -t test`           | Test affected projects |
+| `npx nx run-many -t build`          | Build all projects     |
 
 ---
 

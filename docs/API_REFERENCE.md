@@ -18,20 +18,20 @@ This document provides the complete API reference for the backend service.
 
 The API is a RESTful service built with Express.js that provides product data for the e-commerce platform.
 
-| Property | Value |
-|----------|-------|
-| **Protocol** | HTTPS |
-| **Format** | JSON |
-| **Port** | 3333 (development) |
+| Property     | Value              |
+| ------------ | ------------------ |
+| **Protocol** | HTTPS              |
+| **Format**   | JSON               |
+| **Port**     | 3333 (development) |
 
 ---
 
 ## Base URL
 
-| Environment | URL |
-|-------------|-----|
-| **Development** | `http://localhost:3333/api` |
-| **Production** | `https://vpw7ds8tch.us-east-1.awsapprunner.com/api` |
+| Environment     | URL                                                 |
+| --------------- | --------------------------------------------------- |
+| **Development** | `http://localhost:3333/api`                         |
+| **Production**  | `https://vpw7ds8tch.us-east-1.awsapprunner.com/api` |
 
 ---
 
@@ -61,17 +61,17 @@ GET /api/products
 
 **Query Parameters**
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `page` | number | 1 | Page number (1-indexed) |
-| `pageSize` | number | 12 | Items per page (max 100) |
-| `category` | string | - | Filter by category |
-| `search` | string | - | Search in name and description |
-| `inStock` | boolean | - | Filter by stock availability |
-| `minPrice` | number | - | Minimum price filter |
-| `maxPrice` | number | - | Maximum price filter |
-| `sortBy` | string | - | Sort field (price, rating, name) |
-| `sortOrder` | string | asc | Sort order (asc, desc) |
+| Parameter   | Type    | Default | Description                      |
+| ----------- | ------- | ------- | -------------------------------- |
+| `page`      | number  | 1       | Page number (1-indexed)          |
+| `pageSize`  | number  | 12      | Items per page (max 100)         |
+| `category`  | string  | -       | Filter by category               |
+| `search`    | string  | -       | Search in name and description   |
+| `inStock`   | boolean | -       | Filter by stock availability     |
+| `minPrice`  | number  | -       | Minimum price filter             |
+| `maxPrice`  | number  | -       | Maximum price filter             |
+| `sortBy`    | string  | -       | Sort field (price, rating, name) |
+| `sortOrder` | string  | asc     | Sort order (asc, desc)           |
 
 **Response**
 
@@ -115,9 +115,9 @@ GET /api/products/:id
 
 **Path Parameters**
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `id` | string | Product ID |
+| Parameter | Type   | Description |
+| --------- | ------ | ----------- |
+| `id`      | string | Product ID  |
 
 **Response**
 
@@ -163,13 +163,7 @@ GET /api/products/categories
 **Response**
 
 ```json
-[
-  "Electronics",
-  "Clothing",
-  "Home & Kitchen",
-  "Sports & Outdoors",
-  "Books"
-]
+["Electronics", "Clothing", "Home & Kitchen", "Sports & Outdoors", "Books"]
 ```
 
 **Example Request**
@@ -218,17 +212,17 @@ interface Product {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `id` | string | Unique identifier |
-| `name` | string | Product name |
-| `description` | string | Product description |
-| `price` | number | Price in USD |
-| `category` | string | Product category |
-| `imageUrl` | string | Product image URL |
-| `inStock` | boolean | Availability status |
-| `rating` | number | Average rating (0-5) |
-| `reviewCount` | number | Number of reviews |
+| Field         | Type    | Description          |
+| ------------- | ------- | -------------------- |
+| `id`          | string  | Unique identifier    |
+| `name`        | string  | Product name         |
+| `description` | string  | Product description  |
+| `price`       | number  | Price in USD         |
+| `category`    | string  | Product category     |
+| `imageUrl`    | string  | Product image URL    |
+| `inStock`     | boolean | Availability status  |
+| `rating`      | number  | Average rating (0-5) |
+| `reviewCount` | number  | Number of reviews    |
 
 ### PaginatedResponse
 
@@ -242,13 +236,13 @@ interface PaginatedResponse<T> {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `items` | T[] | Array of items |
+| Field        | Type   | Description                |
+| ------------ | ------ | -------------------------- |
+| `items`      | T[]    | Array of items             |
 | `totalCount` | number | Total items matching query |
-| `page` | number | Current page number |
-| `pageSize` | number | Items per page |
-| `totalPages` | number | Total number of pages |
+| `page`       | number | Current page number        |
+| `pageSize`   | number | Items per page             |
+| `totalPages` | number | Total number of pages      |
 
 ### ProductFilter
 
@@ -282,12 +276,12 @@ interface ErrorResponse {
 
 ### HTTP Status Codes
 
-| Code | Meaning | When |
-|------|---------|------|
-| `200` | OK | Successful request |
-| `400` | Bad Request | Invalid parameters |
-| `404` | Not Found | Resource doesn't exist |
-| `500` | Internal Server Error | Server error |
+| Code  | Meaning               | When                   |
+| ----- | --------------------- | ---------------------- |
+| `200` | OK                    | Successful request     |
+| `400` | Bad Request           | Invalid parameters     |
+| `404` | Not Found             | Resource doesn't exist |
+| `500` | Internal Server Error | Server error           |
 
 ### Error Examples
 
@@ -329,7 +323,7 @@ interface ErrorResponse {
 // Fetch products
 async function getProducts(filter?: ProductFilter): Promise<PaginatedResponse<Product>> {
   const params = new URLSearchParams();
-  
+
   if (filter?.category) params.set('category', filter.category);
   if (filter?.search) params.set('search', filter.search);
   if (filter?.inStock !== undefined) params.set('inStock', String(filter.inStock));
@@ -337,25 +331,25 @@ async function getProducts(filter?: ProductFilter): Promise<PaginatedResponse<Pr
   if (filter?.pageSize) params.set('pageSize', String(filter.pageSize));
 
   const response = await fetch(`${API_URL}/products?${params}`);
-  
+
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
-  
+
   return response.json();
 }
 
 // Fetch single product
 async function getProduct(id: string): Promise<Product> {
   const response = await fetch(`${API_URL}/products/${id}`);
-  
+
   if (!response.ok) {
     if (response.status === 404) {
       throw new Error('Product not found');
     }
     throw new Error(`HTTP error! status: ${response.status}`);
   }
-  
+
   return response.json();
 }
 
@@ -404,7 +398,7 @@ function ProductList() {
 
   return (
     <div>
-      {products.map(product => (
+      {products.map((product) => (
         <ProductCard key={product.id} {...product} />
       ))}
     </div>
@@ -429,10 +423,10 @@ function ProductDetail({ id }: { id: string }) {
 
 Currently no rate limiting is implemented. Future implementation:
 
-| Limit | Value |
-|-------|-------|
-| Requests per minute | 100 |
-| Requests per hour | 1000 |
+| Limit               | Value |
+| ------------------- | ----- |
+| Requests per minute | 100   |
+| Requests per hour   | 1000  |
 
 Rate limit headers:
 
@@ -448,10 +442,10 @@ X-RateLimit-Reset: 1640000000
 
 The API allows cross-origin requests from the frontend domain:
 
-| Environment | Allowed Origin |
-|-------------|----------------|
-| Development | `http://localhost:4200` |
-| Production | `https://ecommerce.veeracs.info` |
+| Environment | Allowed Origin                   |
+| ----------- | -------------------------------- |
+| Development | `http://localhost:4200`          |
+| Production  | `https://ecommerce.veeracs.info` |
 
 ---
 

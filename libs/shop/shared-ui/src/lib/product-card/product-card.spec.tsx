@@ -34,9 +34,7 @@ describe('ProductCard', () => {
     const stars = screen.getAllByText('★');
     expect(stars).toHaveLength(5);
     // 4.5 rating means 4 filled stars
-    const filledStars = stars.filter(star =>
-      star.className.includes('filled')
-    );
+    const filledStars = stars.filter((star) => star.className.includes('filled'));
     expect(filledStars).toHaveLength(4);
   });
 
