@@ -172,57 +172,40 @@ jobs:
 
       - name: Deploy Shell to S3
         run: |
-          # Upload all files except HTML/JSON with JavaScript content type and long cache
+          # First, sync all files without content-type override (S3 auto-detects)
           aws s3 sync dist/shell s3://cloud-native-ecommerce-shell-production \
             --delete \
-            --exclude "index.html" \
-            --exclude "error.html" \
-            --exclude "assets/error.html" \
-            --exclude "*.json" \
-            --content-type "application/javascript; charset=utf-8" \
             --cache-control "public, max-age=31536000, immutable"
           
-          # Upload HTML with no cache
+          # Override HTML files with correct content-type and no cache
           aws s3 cp dist/shell/index.html s3://cloud-native-ecommerce-shell-production/index.html \
             --content-type "text/html; charset=utf-8" \
             --cache-control "public, max-age=0, must-revalidate"
           
-          # Upload error.html if it exists (check both root and assets folder)
-          if [ -f "dist/shell/error.html" ]; then
-            aws s3 cp dist/shell/error.html s3://cloud-native-ecommerce-shell-production/error.html \
-              --content-type "text/html; charset=utf-8" \
-              --cache-control "public, max-age=3600"
-          elif [ -f "dist/shell/assets/error.html" ]; then
+          # Upload error.html if it exists
+          if [ -f "dist/shell/assets/error.html" ]; then
             aws s3 cp dist/shell/assets/error.html s3://cloud-native-ecommerce-shell-production/error.html \
               --content-type "text/html; charset=utf-8" \
               --cache-control "public, max-age=3600"
           fi
           
-          # Upload JSON files if they exist
-          if ls dist/shell/*.json 1> /dev/null 2>&1; then
-            aws s3 sync dist/shell s3://cloud-native-ecommerce-shell-production \
-              --exclude "*" \
-              --include "*.json" \
+          # Override JSON files with no cache
+          for f in dist/shell/*.json; do
+            [ -f "$f" ] && aws s3 cp "$f" "s3://cloud-native-ecommerce-shell-production/$(basename $f)" \
               --content-type "application/json; charset=utf-8" \
               --cache-control "public, max-age=0, must-revalidate"
-          fi
+          done
 
       - name: Deploy Products to S3
         run: |
           aws s3 sync dist/products s3://cloud-native-ecommerce-products-production/remotes/products \
             --delete \
-            --exclude "index.html" \
-            --exclude "*.json" \
-            --content-type "application/javascript; charset=utf-8" \
             --cache-control "public, max-age=31536000, immutable"
 
       - name: Deploy Product-Detail to S3
         run: |
           aws s3 sync dist/product-detail s3://cloud-native-ecommerce-product-detail-production/remotes/product-detail \
             --delete \
-            --exclude "index.html" \
-            --exclude "*.json" \
-            --content-type "application/javascript; charset=utf-8" \
             --cache-control "public, max-age=31536000, immutable"
 
       - name: Invalidate CloudFront cache
